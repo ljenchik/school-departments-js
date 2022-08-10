@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "NODE_ENV=development nodemon index.js",
+    "migrate": "knex migrate:latest --knexfile database/knexfile.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,10 @@
   },
   "homepage": "https://github.com/ljenchik/school-departments-js#readme",
   "dependencies": {
-    "express": "^4.18.1"
+    "body-parser": "^1.20.0",
+    "express": "^4.18.1",
+    "knex": "^2.2.0",
+    "nodemon": "^2.0.19",
+    "pg": "^8.7.3"
   }
 }
