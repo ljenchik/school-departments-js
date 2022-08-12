@@ -12,7 +12,7 @@ export async function createDepartment(department) {
   if (!data.success) {
     return { error: data.message, id: "", success: false };
   } else {
-    return { error: "", id: data.reportId, success: true };
+    return { error: "", id: data.id, success: true };
   }
 }
 

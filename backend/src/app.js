@@ -16,11 +16,7 @@ const createApp = () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
 
-  app.post("/department/create", async (req, res) => {
-    const requestBody = req.body;
-    const departmentId = await createDepartment(requestBody.name);
-    return res.json({ success: true, departmentId: departmentId });
-  });
+  
 
   app.get("/department", async (req, res) => {
     const departments = await getAllDepartments();
@@ -33,10 +29,10 @@ const createApp = () => {
     return res.json(department);
   });
 
-  app.delete("/department/:id/delete", async (req, res) => {
-    var id = req.params.id;
-    await deleteDepartmentById(id);
-    res.sendStatus(200);
+  app.post("/department/create", async (req, res) => {
+    const requestBody = req.body;
+    const departmentId = await createDepartment(requestBody.name);
+    return res.json({ success: true, id: departmentId });
   });
 
   app.put("/department/:id(\\d+)/edit", async (req, res) => {
@@ -45,6 +41,14 @@ const createApp = () => {
     await updateDepartmentName(id, requestBody.name);
     return res.json({ success: true });
   });
+
+  app.delete("/department/:id/delete", async (req, res) => {
+    var id = req.params.id;
+    await deleteDepartmentById(id);
+    res.sendStatus(200);
+  });
+
+  
 
   return app;
 };

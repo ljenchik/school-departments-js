@@ -5,16 +5,21 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
 export const CreateDepartment = () => {
-  const [value, setValue] = useState({});
-  const [message, setMessage] = useState("");
+  const [department, setDepartment] = useState({name : ""});
   const [error, setError] = useState("");
   const [isDisabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
+  const handleChangeDepartmentName = (event) => {
+    department["name"] = event.target.value;
+    setDepartment(department);
+    console.log(department);
+  };
+
   const submit = (event) => {
     const request = {};
-    if (value["DepartmentName"] !== "") {
-      request["DepartmentName"] = value["DepartmentName"];
+    if (department["name"] !== "") {
+      request["name"] = department["name"];
     }
     createDepartment(request).then((response) => {
       if (response.success === true) {
@@ -32,20 +37,9 @@ export const CreateDepartment = () => {
   };
 
   const reset = (event) => {
-    setValue("");
-    setMessage("");
+    setDepartment({});
     setError("");
     setDisabled(false);
-  };
-
-  const handleChange = (event, name) => {
-      value[name] = event.target.value;
-    setValue({ ...value });
-  };
-
-  const handleChangeDepartmentName = (event, name) => {
-    value[name] = event.target.value;
-    setValue({ ...value });
   };
 
   return (
@@ -53,7 +47,7 @@ export const CreateDepartment = () => {
       <div>
         <h3 className="title">Add department</h3>
       </div>
-      <Link to="/" className="link">
+      <Link to="/department" className="link">
         {" "}
         View all departments{" "}
       </Link>
@@ -61,16 +55,15 @@ export const CreateDepartment = () => {
         <hr />
           <div>
             <label>
-              Name
+              Department name
               <input
                 className="input-large-large search-query mx-3"
                 type="text"
-                name="name"
-                placeholder="Enter a report name"
+                placeholder="Enter a department name"
                 onChange={(event) =>
-                  handleChangeDepartmentName(event, "ReportName")
+                  handleChangeDepartmentName(event)
                 }
-                value={value["ReportName"]}
+                value={department.name}
               ></input>
             </label>
           </div>
@@ -88,14 +81,8 @@ export const CreateDepartment = () => {
           </Button>
         </div>
         <div></div>
-        <div className="message">
-          {error ? (
-            <p style={{ color: "red" }}>{error}</p>
-          ) : (
-            <p style={{ color: "green" }}>{message}</p>
-          )}
-        </div>
       </fieldset>
     </div>
   );
 };
+
