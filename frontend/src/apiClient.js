@@ -26,6 +26,22 @@ export async function getDepartmentById(id) {
     }
   }
 
+  export async function editDepartment(id, updatedReport) {
+    const response = await fetch(`${baseurl}/department/${id}/edit`, {
+      method: "PUT",
+      body: JSON.stringify(updatedReport),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!data.success) {
+      return { error: data.message, success: false };
+    } else {
+      return { error: "", success: true };
+    }
+  }
+
   export async function deleteDepartmentById(id) {
     const response = await fetch(`${baseurl}/department/${id}/delete`, {
       method: "DELETE",

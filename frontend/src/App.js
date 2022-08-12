@@ -5,6 +5,7 @@ import { CreateDepartment } from './components/createDepartment';
 import { Home } from './components/homePage';
 import { GetAllDepartments } from './components/getAllDepartments'; 
 import { DepartmentInfo } from './components/departmentInfo';
+import { EditDepartment } from './components/editDepartment';
 
 const Paths = () => {
   return (
@@ -13,6 +14,7 @@ const Paths = () => {
       <Route exact path="/" element={<Home />}></Route>
       <Route exact path="/department" element={<GetAllDepartments />}></Route>
       <Route exact path="/department/:id" element={<DepartmentInfo />}></Route>
+      <Route exact path="/department/:id/edit" element={<EditDepartment />}></Route>
     </Routes>
   );
 };
