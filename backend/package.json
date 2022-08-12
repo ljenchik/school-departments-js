@@ -1,29 +1,44 @@
 {
-  "name": "school-departments",
+  "name": "School",
   "version": "1.0.0",
-  "description": "This app:",
+  "description": "School staff managing application ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development nodemon index.js",
-    "migrate": "knex migrate:latest --knexfile database/knexfile.js"
+    "migrate": "knex migrate:latest --knexfile database/knexfile.js",
+    "seed": "knex seed:run --knexfile database/knexfile.js",
+    "start": "nodemon --exec babel-node src/index.js",
+    "test": "jest src --watch"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ljenchik/school-departments-js.git"
+    "type": "git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ljenchik/school-departments-js/issues"
-  },
-  "homepage": "https://github.com/ljenchik/school-departments-js#readme",
   "dependencies": {
-    "body-parser": "^1.20.0",
-    "express": "^4.18.1",
-    "knex": "^2.2.0",
-    "nodemon": "^2.0.19",
-    "pg": "^8.7.3"
+    "@babel/cli": "~7.16.0",
+    "@babel/core": "~7.16.0",
+    "@babel/node": "~7.16.0",
+    "@babel/preset-env": "~7.16.4",
+    "@babel/register": "~7.16.0",
+    "body-parser": "~1.19.0",
+    "cors": "~2.8.5",
+    "express": "~4.17.1",
+    "knex": "^2.1.0",
+    "nodemon": "~2.0.15",
+    "pg": "^8.7.3",
+    "regenerator-runtime": "~0.13.9",
+    "sqlite3": "^5.0.9"
+  },
+  "devDependencies": {
+    "babel-jest": "~27.3.1",
+    "jest": "~27.3.1",
+    "supertest": "~6.1.6"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "./test-setup.js"
+    ]
   }
 }

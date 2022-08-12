@@ -1,9 +1,9 @@
 const baseurl = process.env["REACT_APP_BACKEND_DOMAIN"];
 
-export async function createReport(department) {
+export async function createDepartment(department) {
   const response = await fetch(`${baseurl}/department/create`, {
     method: "POST",
-    body: JSON.stringify(newReport),
+    body: JSON.stringify(department),
     headers: {
       "Content-Type": "application/json",
     },
