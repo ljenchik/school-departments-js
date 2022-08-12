@@ -42,7 +42,7 @@ const createApp = () => {
     return res.json({ success: true });
   });
 
-  app.delete("/department/:id/delete", async (req, res) => {
+  app.delete("/department/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;
     await deleteDepartmentById(id);
     res.sendStatus(200);
