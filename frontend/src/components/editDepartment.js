@@ -74,7 +74,7 @@ export const EditDepartment = () => {
               Save
             </Button>
           </div>
-          <Link to="/" className="edit-report-link">
+          <Link to="/department" className="edit-report-link">
             View all reports
           </Link>
       </div>

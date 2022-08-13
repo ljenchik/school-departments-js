@@ -8,6 +8,14 @@ import {
   updateDepartmentName,
   deleteDepartmentById,
 } from "./repos/departmentRepo";
+import {
+  getAllEmployees,
+  getEmployeeById,
+  getEmployeesByDepartmentId,
+  createEmployee,
+  updateEmployee,
+  deleteEmployeeById,
+} from "./repos/employeeRepo";
 
 const createApp = () => {
   const app = express();
@@ -15,8 +23,6 @@ const createApp = () => {
   app.use(cors());
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
-
-  
 
   app.get("/department", async (req, res) => {
     const departments = await getAllDepartments();
@@ -44,11 +50,51 @@ const createApp = () => {
 
   app.delete("/department/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;
-    await deleteDepartmentById(id);
-    res.sendStatus(200);
+    const employees = await getEmployeestByDepartmentId(id);
+    if (employees.length === 0) {
+      await deleteDepartmentById(id);
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(500);
+    }
   });
 
-  
+  app.get("/employee", async (req, res) => {
+    const employees = await getAllEmployees();
+    return res.json(employees);
+  });
+
+  app.get("/department/:id(\\d+)/employee", async (req, res) => {
+    var id = req.params.id;
+    const employee = await getEmployeesByDepartmentId(id);
+    return res.json(employee);
+  });
+
+  app.get("/employee/:id(\\d+)", async (req, res) => {
+    var id = req.params.id;
+    const employee = await getEmployeeById(id);
+    return res.json(employee);
+  });
+
+  app.post("/department/:id/employee/create", async (req, res) => {
+    const requestBody = req.body;
+    var id = req.params.id;
+    const employeetId = await createEmployee(id, requestBody);
+    return res.json({ success: true, id: employeetId });
+  });
+
+  app.put("/employee/:id(\\d+)/edit", async (req, res) => {
+    var id = req.params.id;
+    const requestBody = req.body;
+    await updateEmployee(id, requestBody.name);
+    return res.json({ success: true });
+  });
+
+  app.delete("/employee/:id(\\d+)/delete", async (req, res) => {
+    var id = req.params.id;
+    await deleteEmployeeById(id);
+    res.sendStatus(200);
+  });
 
   return app;
 };
