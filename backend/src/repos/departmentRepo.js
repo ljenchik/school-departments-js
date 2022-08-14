@@ -8,8 +8,17 @@ export async function getAllDepartments() {
   }
 
   export async function getDepartmentById(id) {
-    return await knex("department")
-    .where('id', id)
+    return (await knex
+    .raw('select d1.*, grp.count\
+    from department d1 \
+    join (\
+      select d.id, count(*) \
+      from department d\
+      join employee e on e.department_id = d.id\
+      where(d.id = ' + id + 
+      ') group by d.id\
+    ) grp on d1.id = grp.id')
+    ).rows
   }
 
   export async function createDepartment(departmentName) {
@@ -20,7 +29,6 @@ export async function getAllDepartments() {
       .returning("id");
     return id[0].id;
   }
-
   export async function updateDepartmentName(id, name) {
     return await knex("department")
       .update({name})
