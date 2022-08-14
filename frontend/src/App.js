@@ -11,6 +11,7 @@ import { GetEmployeesByDepartmentId } from './components/getEmployeesByDepartmen
 import { GetAllEmployees } from './components/getAllEmployees';
 import { GetEmployeeById } from './components/getEmployeeById';
 import { EditEmployee } from './components/editEmployee';
+import { Navbar1 } from './components/navbar';
 
 const Paths = () => {
   return (
@@ -33,6 +34,7 @@ const Paths = () => {
 const App = () => {
   return (
     <Router>
+      <Navbar1 />
       <main>
         <Paths />
       </main>

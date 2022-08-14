@@ -26,10 +26,10 @@ export async function getDepartmentById(id) {
     }
   }
 
-  export async function editDepartment(id, updatedReport) {
+  export async function editDepartment(id, updatedDepartment) {
     const response = await fetch(`${baseurl}/department/${id}/edit`, {
       method: "PUT",
-      body: JSON.stringify(updatedReport),
+      body: JSON.stringify(updatedDepartment),
       headers: {
         "Content-Type": "application/json",
       },
