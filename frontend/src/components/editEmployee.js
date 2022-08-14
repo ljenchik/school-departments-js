@@ -1,41 +1,42 @@
-import React, { useState } from "react";
-import { createEmployee } from "../apiClient";
+import React, { useState, useEffect} from "react";
+import { editEmployee } from "../apiClient";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
+import { getEmployeeById } from "../apiClient";
 
-export const CreateEmployee = () => {
+export const EditEmployee = () => {
   const params = useParams(); 
-  const department_id = params.id;
-  console.log(department_id);
-  const [employee, setEmployee] = useState({
-    name: "",
-    role: "",
-    dob: "",
-    address: "",
-    email: "",
-    start_date: "",
-    salary: "",
-    department_id : parseInt(department_id)
-  });
+  const employee_id = params.id;
+  const [employee, setEmployee] = useState({});
   const [error, setError] = useState("");
   const [isDisabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    getEmployeeById(employee_id).then((response) => {
+      setEmployee(response[0]);
+    });
+  }, []);
+
   const handleChangeEmployeeName = (event) => {
         employee.name = event.target.value;
     setEmployee({...employee});
+    setDisabled(false);
+
   };
 
   const handleChangeEmployeeRole = (event) => {
         employee.role = event.target.value;
     setEmployee({...employee});
+    setDisabled(false);
   };
 
   const handleChangeEmployeeDob = (event) => {
         employee.dob = event.target.value;
     setEmployee({...employee});
+    setDisabled(false);
   };
 
   const handleChangeEmployeeAddress = (event) => {
@@ -46,32 +47,28 @@ export const CreateEmployee = () => {
   const handleChangeEmployeeEmail = (event) => {
         employee.email = event.target.value;
     setEmployee({...employee});
+    setDisabled(false);
   };
 
   const handleChangeEmployeeStartDate = (event) => {
         employee.start_date = event.target.value;
     setEmployee({...employee});
+    setDisabled(false);
   };
 
   const handleChangeEmployeeSalary = (event) => {
     employee.salary = parseFloat(event.target.value);
     setEmployee({...employee});
+    setDisabled(false);
 };
 
   const handleKeyPress = (event) => {
     if (event.keyCode === 13) {
-      submit();
+      saveUpdatedEmployee();
     }
   };
   
-  const reset = (event) => {
-    setEmployee({});
-    setError("");
-    setDisabled(false);
-  };
-
-
-  const submit = (event) => {
+  const saveUpdatedEmployee = (event) => {
     const request = {};
     if (employee.name!== "") {
       request.name = employee.name;
@@ -80,7 +77,7 @@ export const CreateEmployee = () => {
         request.role = employee.role;
       }
       if (employee.dob!== "") {
-        request.dob = employee.dob;
+        request.dob = new Date (employee.dob);
       }
       if (employee.address!== "") {
         request.address = employee.address;
@@ -92,30 +89,31 @@ export const CreateEmployee = () => {
         request.start_date = employee.start_date;
       }
       if (employee.salary!== "") {
-        request.salary = employee.salary;
+        request.salary = new Date (employee.salary);
       }
-    createEmployee(department_id, request).then((response) => {
+    editEmployee(employee_id, request).then((response) => {
       if (response.success === true) {
-        navigate(`/department/${department_id}/employee`);
+        navigate(`/employee/${employee_id}`);
       } else {
         setError(response.error);
       }
+      setDisabled(true);
     });
   };
 
   return (
     <div>
       <div>
-        <h3 className="title">Add employee</h3>
-      </div>
+        <h3 className="title">Update employee details</h3>
+      </div> <br/>
       <Link to="/department" className="link">
         {" "}
-        View all departments{" "}
-      </Link>
+        View all departments{" "} 
+      </Link><br/>
       <Link to="/employee" className="link">
         {" "}
         View all employees{" "}
-      </Link>
+      </Link><br/>
       <fieldset className="fieldset" onKeyDown={handleKeyPress} tabIndex="0">
         <hr />
         <div>
@@ -124,7 +122,6 @@ export const CreateEmployee = () => {
             <input
               className="input-large-large search-query mx-3"
               type="text"
-              placeholder="Enter a name"
               onChange={(event) => handleChangeEmployeeName(event)}
               value={employee.name}
             ></input>
@@ -138,7 +135,6 @@ export const CreateEmployee = () => {
             <input
               className="input-large-large search-query mx-3"
               type="text"
-              placeholder="Enter a role"
               onChange={(event) => handleChangeEmployeeRole(event)}
               value={employee.role}
             ></input>
@@ -215,18 +211,13 @@ export const CreateEmployee = () => {
         <hr />
 
 
-        <div>
-          <Button
-            className="btn btn-success my-1"
-            disabled={isDisabled}
-            onClick={submit}
-          >
-            Submit
-          </Button>
-          <Button className="mx-2 my-1" onClick={reset}>
-            Reset
-          </Button>
-        </div>
+        <Button
+              className="my-3"
+              disabled={isDisabled}
+              onClick={saveUpdatedEmployee}
+            >
+              Save
+            </Button>
         <div></div>
       </fieldset>
     </div>

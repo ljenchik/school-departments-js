@@ -10,6 +10,7 @@ import { CreateEmployee } from './components/createEmployee';
 import { GetEmployeesByDepartmentId } from './components/getEmployeesByDepartmentId';
 import { GetAllEmployees } from './components/getAllEmployees';
 import { GetEmployeeById } from './components/getEmployeeById';
+import { EditEmployee } from './components/editEmployee';
 
 const Paths = () => {
   return (
@@ -20,6 +21,7 @@ const Paths = () => {
       <Route exact path="/department/:id" element={<DepartmentInfo />}></Route>
       <Route exact path="/department/:id/edit" element={<EditDepartment />}></Route>
       <Route exact path="/department/:id/employee/create" element={<CreateEmployee/>} > </Route>
+      <Route exact path="/employee/:id/edit" element={<EditEmployee/>} > </Route>
       <Route exact path="/department/:id/employee" element={<GetEmployeesByDepartmentId />}></Route>
       <Route exact path="/employee" element={<GetAllEmployees />}></Route>
       <Route exact path="/employee/:id" element={<GetEmployeeById />}></Route>

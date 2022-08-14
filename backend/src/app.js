@@ -50,7 +50,7 @@ const createApp = () => {
 
   app.delete("/department/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;
-    const employees = await getEmployeestByDepartmentId(id);
+    const employees = await getEmployeesByDepartmentId(id);
     if (employees.length === 0) {
       await deleteDepartmentById(id);
       res.sendStatus(200);
@@ -61,18 +61,47 @@ const createApp = () => {
 
   app.get("/employee", async (req, res) => {
     const employees = await getAllEmployees();
+    for (var i = 0; i < employees.length; i++) {
+      employees[i].dob = employees[i].dob.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
+      employees[i].start_date = employees[i].start_date.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
+    }
     return res.json(employees);
   });
 
   app.get("/department/:id(\\d+)/employee", async (req, res) => {
     var id = req.params.id;
-    const employee = await getEmployeesByDepartmentId(id);
-    return res.json(employee);
+    const employees = await getEmployeesByDepartmentId(id);
+    for (var i = 0; i < employees.length; i++) {
+      employees[i].dob = employees[i].dob.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
+      employees[i].start_date = employees[i].start_date.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
+    }
+    return res.json(employees);
   });
 
   app.get("/employee/:id(\\d+)", async (req, res) => {
     var id = req.params.id;
-    const employee = await getEmployeeById(id);
+    var employee = await getEmployeeById(id);
+    console.log(employee[0]);
+    employee[0].dob = employee[0].dob.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
+      employee[0].start_date = employee[0].start_date.toLocaleDateString()
+      .split("/")
+      .reverse()
+      .join("-");
     return res.json(employee);
   });
 

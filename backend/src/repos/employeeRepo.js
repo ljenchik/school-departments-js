@@ -24,6 +24,7 @@ export async function createEmployee(department_id, employee) {
         address: employee.address,
         email: employee.email,
         start_date: employee.start_date,
+        salary: employee.salary,
         department_id: department_id
       })
       .returning("id");
