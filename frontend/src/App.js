@@ -6,6 +6,10 @@ import { Home } from './components/homePage';
 import { GetAllDepartments } from './components/getAllDepartments'; 
 import { DepartmentInfo } from './components/departmentInfo';
 import { EditDepartment } from './components/editDepartment';
+import { CreateEmployee } from './components/createEmployee';
+import { GetEmployeesByDepartmentId } from './components/getEmployeesByDepartmentId';
+import { GetAllEmployees } from './components/getAllEmployees';
+import { GetEmployeeById } from './components/getEmployeeById';
 
 const Paths = () => {
   return (
@@ -15,9 +19,14 @@ const Paths = () => {
       <Route exact path="/department" element={<GetAllDepartments />}></Route>
       <Route exact path="/department/:id" element={<DepartmentInfo />}></Route>
       <Route exact path="/department/:id/edit" element={<EditDepartment />}></Route>
+      <Route exact path="/department/:id/employee/create" element={<CreateEmployee/>} > </Route>
+      <Route exact path="/department/:id/employee" element={<GetEmployeesByDepartmentId />}></Route>
+      <Route exact path="/employee" element={<GetAllEmployees />}></Route>
+      <Route exact path="/employee/:id" element={<GetEmployeeById />}></Route>
     </Routes>
   );
 };
+
 
 const App = () => {
   return (

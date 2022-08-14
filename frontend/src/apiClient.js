@@ -53,3 +53,62 @@ export async function getDepartmentById(id) {
       throw "Error deleting. Response status code: " + response.status;
     }
   }
+
+  export async function getAllEmployees() {
+    const response = await fetch(`${baseurl}/employee`);
+    return await response.json();
+  }
+
+  export async function getEmployeeById(id) {
+    const response = await fetch(`${baseurl}/employee/${id}`);
+    return await response.json();
+  }
+
+  export async function getEmployeesByDepartmentId(id) {
+    const response = await fetch(`${baseurl}/department/${id}/employee`);
+    return await response.json();
+  }
+
+  export async function createEmployee(department_id, employee) {
+    const response = await fetch(`${baseurl}/department/${department_id}/employee/create`, {
+      method: "POST",
+      body: JSON.stringify(employee),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!data.success) {
+      return { error: data.message, employee_id: "", department_id: "", success: false };
+    } else {
+      return { error: "", department_id: data.department_id, employee_id: data.employee_id, success: true };
+    }
+  }
+
+  export async function editEmployee(id, updatedEmployee) {
+    const response = await fetch(`${baseurl}/employee/${id}/edit`, {
+      method: "PUT",
+      body: JSON.stringify(updatedEmployee),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    if (!data.success) {
+      return { error: data.message, success: false };
+    } else {
+      return { error: "", success: true };
+    }
+  }
+
+  export async function deleteEmployeeById(id) {
+    const response = await fetch(`${baseurl}/employee/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.status !== 200) {
+      throw "Error deleting. Response status code: " + response.status;
+    }
+  }

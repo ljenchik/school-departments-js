@@ -80,7 +80,11 @@ const createApp = () => {
     const requestBody = req.body;
     var id = req.params.id;
     const employeetId = await createEmployee(id, requestBody);
-    return res.json({ success: true, id: employeetId });
+    return res.json({
+      success: true,
+      employee_id: employeetId,
+      department_id: id
+    });
   });
 
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
