@@ -14,6 +14,7 @@ export const CreateEmployee = () => {
     role: "",
     dob: "",
     address: "",
+    phone: "",
     email: "",
     start_date: "",
     salary: "",
@@ -43,6 +44,10 @@ export const CreateEmployee = () => {
     setEmployee({...employee});
   };
 
+  const handleChangeEmployeePhone = (event) => {
+    employee.phone = event.target.value;
+setEmployee({...employee});
+};
   const handleChangeEmployeeEmail = (event) => {
         employee.email = event.target.value;
     setEmployee({...employee});
@@ -84,6 +89,9 @@ export const CreateEmployee = () => {
       }
       if (employee.address!== "") {
         request.address = employee.address;
+      }
+      if (employee.phone!== "") {
+        request.phone = employee.phone;
       }
       if (employee.email!== "") {
         request.email = employee.email;
@@ -167,6 +175,19 @@ export const CreateEmployee = () => {
               type="text"
               onChange={(event) => handleChangeEmployeeAddress(event)}
               value={employee.address}
+            ></input>
+          </label>
+        </div>
+        <hr />
+
+        <div>
+          <label>
+            Phone
+            <input
+              className="input-large-large search-query mx-3"
+              type="text"
+              onChange={(event) => handleChangeEmployeePhone(event)}
+              value={employee.phone}
             ></input>
           </label>
         </div>

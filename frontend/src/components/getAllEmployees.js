@@ -22,12 +22,16 @@ export const GetAllEmployees = () => {
               >
                 Name {employee.name}
               </Link><br/>
-              Role {employee.role} <br/>
-              Address {employee.address} <br/>
-              Email {employee.email} <br/>
-              Date of birth {employee.dob} <br/>
-              Salary {employee.salary} <br/>
+              Name {employee.name} <br/>
+              Role {employee.role}<br/>
+              Address {employee.address}<br/>
+              Phone {employee.phone}<br/>
+              Email {employee.email}<br/>
+              Date of birth {employee.dob}<br/>
+              Salary {employee.salary}<br/>
+              Start date {employee.start_date}<br/>
               Department {employee.department_id}
+     
             <hr/><br/>
             </div>
           ))}

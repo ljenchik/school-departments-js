@@ -62,14 +62,16 @@ const createApp = () => {
   app.get("/employee", async (req, res) => {
     const employees = await getAllEmployees();
     for (var i = 0; i < employees.length; i++) {
-      employees[i].dob = employees[i].dob.toLocaleDateString()
-      .split("/")
-      .reverse()
-      .join("-");
-      employees[i].start_date = employees[i].start_date.toLocaleDateString()
-      .split("/")
-      .reverse()
-      .join("-");
+      employees[i].dob = employees[i].dob
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
+      employees[i].start_date = employees[i].start_date
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
     }
     return res.json(employees);
   });
@@ -78,14 +80,16 @@ const createApp = () => {
     var id = req.params.id;
     const employees = await getEmployeesByDepartmentId(id);
     for (var i = 0; i < employees.length; i++) {
-      employees[i].dob = employees[i].dob.toLocaleDateString()
-      .split("/")
-      .reverse()
-      .join("-");
-      employees[i].start_date = employees[i].start_date.toLocaleDateString()
-      .split("/")
-      .reverse()
-      .join("-");
+      employees[i].dob = employees[i].dob
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
+      employees[i].start_date = employees[i].start_date
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
     }
     return res.json(employees);
   });
@@ -94,11 +98,13 @@ const createApp = () => {
     var id = req.params.id;
     var employee = await getEmployeeById(id);
     console.log(employee[0]);
-    employee[0].dob = employee[0].dob.toLocaleDateString()
+    employee[0].dob = employee[0].dob
+      .toLocaleDateString()
       .split("/")
       .reverse()
       .join("-");
-      employee[0].start_date = employee[0].start_date.toLocaleDateString()
+    employee[0].start_date = employee[0].start_date
+      .toLocaleDateString()
       .split("/")
       .reverse()
       .join("-");
@@ -112,14 +118,24 @@ const createApp = () => {
     return res.json({
       success: true,
       employee_id: employeetId,
-      department_id: id
+      department_id: id,
     });
   });
 
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;
     const requestBody = req.body;
-    await updateEmployee(id, requestBody.name);
+    await updateEmployee(
+      id,
+      requestBody.name,
+      requestBody.role,
+      requestBody.dob,
+      requestBody.address,
+      requestBody.phone,
+      requestBody.email,
+      requestBody.salary,
+      requestBody.start_date
+    );
     return res.json({ success: true });
   });
 

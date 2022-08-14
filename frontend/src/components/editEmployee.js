@@ -44,6 +44,11 @@ export const EditEmployee = () => {
     setEmployee({...employee});
   };
 
+  const handleChangeEmployeePhone = (event) => {
+    employee.phone = event.target.value;
+setEmployee({...employee});
+};
+
   const handleChangeEmployeeEmail = (event) => {
         employee.email = event.target.value;
     setEmployee({...employee});
@@ -82,14 +87,17 @@ export const EditEmployee = () => {
       if (employee.address!== "") {
         request.address = employee.address;
       }
+      if (employee.phone!== "") {
+        request.phone = employee.phone;
+      }
       if (employee.email!== "") {
         request.email = employee.email;
       }
       if (employee.start_date!== "") {
-        request.start_date = employee.start_date;
+        request.start_date = new Date (employee.start_date);
       }
       if (employee.salary!== "") {
-        request.salary = new Date (employee.salary);
+        request.salary = employee.salary;
       }
     editEmployee(employee_id, request).then((response) => {
       if (response.success === true) {
@@ -160,9 +168,22 @@ export const EditEmployee = () => {
             Address
             <input
               className="input-large-large search-query mx-3"
-              type="text"
+              type="address"
               onChange={(event) => handleChangeEmployeeAddress(event)}
               value={employee.address}
+            ></input>
+          </label>
+        </div>
+        <hr />
+
+        <div>
+          <label>
+            Address
+            <input
+              className="input-large-large search-query mx-3"
+              type="phone"
+              onChange={(event) => handleChangeEmployeePhone(event)}
+              value={employee.phone}
             ></input>
           </label>
         </div>

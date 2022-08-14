@@ -10,7 +10,9 @@ exports.up = function(knex) {
     table.string('role', 64).notNullable();
     table.date('dob').notNullable();
     table.string('address', 128).notNullable();
+    table.string('phone', 128).notNullable();
     table.string('email', 64).notNullable();
+    table.double('salary').notNullable();
     table.date('start_date').notNullable();
     table.integer('department_id').notNullable();
     
@@ -25,3 +27,4 @@ exports.up = function(knex) {
     exports.down = function(knex) {
     return knex.schema.dropTable('employee');
     };
+    

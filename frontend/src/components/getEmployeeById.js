@@ -39,9 +39,12 @@ export const GetEmployeeById = () => {
               Name {employee.name} <br/>
               Role {employee.role}<br/>
               Address {employee.address}<br/>
+              Phone {employee.phone}<br/>
               Email {employee.email}<br/>
               Date of birth {employee.dob}<br/>
               Salary {employee.salary}<br/>
+              Start date {employee.start_date}<br/>
+              Department {employee.department_id}
      
       <Button className="btn btn-success my-2" onClick={editEmployee}>
       Edit

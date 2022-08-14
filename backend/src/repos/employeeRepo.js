@@ -22,6 +22,7 @@ export async function createEmployee(department_id, employee) {
         role: employee.role,
         dob: employee.dob,
         address: employee.address,
+        phone: employee.phone,
         email: employee.email,
         start_date: employee.start_date,
         salary: employee.salary,
@@ -31,10 +32,10 @@ export async function createEmployee(department_id, employee) {
     return id[0].id;
   }
 
-  export async function updateEmployee(id, employee) {
+  export async function updateEmployee(id, name, role, dob, address, phone, email, salary, start_date) {
     return await knex("employee")
-      //.update({employee})
-      .where({id})
+      .update({name, role, dob, address, phone, email, salary, start_date})
+       .where({id})
   }
 
   export async function deleteEmployeeById(id) {
