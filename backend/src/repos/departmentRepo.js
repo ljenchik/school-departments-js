@@ -9,10 +9,10 @@ export async function getAllDepartments() {
 
   export async function getDepartmentById(id) {
     return (await knex
-    .raw('select d1.*, grp.count\
+    .raw('select d1.*, grp.count, grp.avg\
     from department d1 \
     join (\
-      select d.id, count(*) \
+      select d.id, count(*), AVG(e.salary) \
       from department d\
       join employee e on e.department_id = d.id\
       where(d.id = ' + id + 

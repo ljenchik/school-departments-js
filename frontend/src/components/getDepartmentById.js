@@ -32,17 +32,28 @@ export const DepartmentInfo = () => {
   } else {
     return (
       <div>
-        <div>{department.name}</div>
-        <Button className="btn btn-success my-2" onClick={editDepartment}>
+        <h3>{department.name}</h3>
+        <div>Head of department </div>
+        <div>Number of members {" "}{department.count}</div>
+        <div>Average salary {" "}£{department.avg}</div>
+        <div>
+          <Link to={`/department/${id}/employee`}>
+          Employees of {department.name}
+          </Link></div>
+      <div> <Button className="btn btn-success my-2" onClick={editDepartment}>
           Edit
         </Button>
         <Button className="mx-2 my-2" onClick={deleteDepartment}>
           Delete
-        </Button>
-        <Link to="/department" className="Link">
+        </Button></div>
+       <div><Link to="/department" className="Link">
           {" "}
           View all departments{" "}
-        </Link>
+        </Link></div>
+        <div><Link to="/employee" className="Link">
+          {" "}
+          View all employees{" "}
+        </Link></div>
       </div>
     );
   }
