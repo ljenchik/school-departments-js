@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { getDepartmentById, editDepartment } from "../apiClient";
+import "./css/editDepartment.css";
+import Container from "react-bootstrap/esm/Container";
 
 export const EditDepartment = () => {
   const params = useParams();
@@ -22,7 +24,7 @@ export const EditDepartment = () => {
     if (event.target.value !== "") {
       department.name = event.target.value;
     }
-    setDepartment({...department});
+    setDepartment({ ...department });
     console.log(department);
     setDisabled(false);
   };
@@ -48,36 +50,41 @@ export const EditDepartment = () => {
     }
   };
 
-  
-
   if (department === undefined) {
     return <div>Loading report ...</div>;
   } else {
     return (
-      <div className="description">
-        <label>
-          Update department name
+      <Container>
+          <h4 className="title">Update department name </h4>
           <input
             className="input-data"
             type="text"
             value={department.name}
             onChange={(event) => handleChange(event)}
           ></input>
-        </label>
-        <div>
-          <Button
-            className="my-3"
-            disabled={isDisabled}
-            onKeyDown={handleKeyPress}
-            onClick={saveUpdatedDepartment}
-          >
-            Save
-          </Button>
-        </div>
-        <Link to="/department" className="edit-report-link">
-          View all departments
-        </Link>
-      </div>
+
+          {/* <h4>Update head of department</h4>
+          <input
+            className="input-data"
+            type="text"
+            value={""}
+            onChange={(event) => handleChange(event)}
+          ></input> */}
+
+          <div>
+            <Button
+              className="my-3"
+              disabled={isDisabled}
+              onKeyDown={handleKeyPress}
+              onClick={saveUpdatedDepartment}
+            >
+              Save
+            </Button>
+          </div>
+          <Link to="/department" className="view-all-dep-link">
+            View all departments
+          </Link>
+      </Container>
     );
   }
 };

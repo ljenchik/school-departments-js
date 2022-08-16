@@ -1,0 +1,15 @@
+.title {
+    margin-top: 70px;
+}
+
+.input-data {
+    width: 60vw;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.view-all-dep-link {
+    text-decoration: none;
+    color:  green;
+    margin-top: 100px;
+ }
