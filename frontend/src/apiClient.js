@@ -50,7 +50,7 @@ export async function getDepartmentById(id) {
       },
     });
     if (response.status !== 200) {
-      throw "Error deleting. Response status code: " + response.status;
+      throw "You can't delete department with employees";
     }
   }
 

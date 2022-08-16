@@ -31,8 +31,20 @@ const createApp = () => {
 
   app.get("/department/:id(\\d+)", async (req, res) => {
     var id = req.params.id;
-    const department = await getDepartmentById(id);
-    return res.json(department);
+    try {
+      const department = await getDepartmentById(id);
+      if (department !== undefined) {
+        if (department[0].avg === null) {
+          department[0].avg = 0;
+        }
+        if (department[0].count === "0") {
+          department[0].count = 0;
+        }
+        return res.json(department);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   });
 
   app.post("/department/create", async (req, res) => {
@@ -50,12 +62,36 @@ const createApp = () => {
 
   app.delete("/department/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;
-    const employees = await getEmployeesByDepartmentId(id);
-    if (employees.length === 0) {
-      await deleteDepartmentById(id);
-      res.sendStatus(200);
-    } else {
-      res.sendStatus(500);
+    try {
+      const response = await getDepartmentById(id);
+      if (!response) {
+        throw new Error("This department doesn't exist");
+      } else {
+        try {
+          if (response[0].count !== '0') {
+            throw new Error("Impossible to delete department with employees");
+          } else {
+            await deleteDepartmentById(id);
+            res.sendStatus(200);
+            // return res.json({
+            //   status: 200,
+            //   error: ""
+            // })
+          }
+        } catch (err) {
+          res.sendStatus(500);
+      // return res.json({
+      //   status: 500,
+      //   error: "Impossible to delete department with employees"
+      // })
+        }
+      }
+    } catch (e) {
+      res.sendStatus(404);
+      // return res.json({
+      //   status: 500,
+      //   error: "This department doesn't exist"
+      // })
     }
   });
 
@@ -97,7 +133,6 @@ const createApp = () => {
   app.get("/employee/:id(\\d+)", async (req, res) => {
     var id = req.params.id;
     var employee = await getEmployeeById(id);
-    console.log(employee[0]);
     employee[0].dob = employee[0].dob
       .toLocaleDateString()
       .split("/")

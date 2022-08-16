@@ -12,9 +12,9 @@ export async function getAllDepartments() {
     .raw('select d1.*, grp.count, grp.avg\
     from department d1 \
     join (\
-      select d.id, count(*), AVG(e.salary) \
+      select d.id, count(e.id), AVG(e.salary) \
       from department d\
-      join employee e on e.department_id = d.id\
+      left join employee e on e.department_id = d.id\
       where(d.id = ' + id + 
       ') group by d.id\
     ) grp on d1.id = grp.id')
