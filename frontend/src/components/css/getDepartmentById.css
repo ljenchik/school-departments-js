@@ -1,8 +1,14 @@
 .title {
     margin-top: 70px;
-}
+    margin-bottom: 20px;
+ }
 
 .error {
     margin-top: 10px;
     margin-left: 10px;
+}
+
+.blink {
+    text-decoration: none;
+    padding: 0px;
 }

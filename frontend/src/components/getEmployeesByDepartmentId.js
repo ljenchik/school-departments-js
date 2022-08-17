@@ -17,9 +17,30 @@ export const GetEmployeesByDepartmentId = (id) => {
     );
   }, []);
 
-  return (
-    <Container>
-        <h3 className="title">Employees of ?????</h3>
+  //const department = getDepartmentById(department_id);
+  
+  if (employees === undefined) {
+    return <div>Loading data ...</div>;
+  } else if (employees.length === 0 ) {
+    return (
+      <Container>
+        <h4 className="title">Employees of ???</h4>
+        <div>There are no employees in this department</div>
+        <div>
+          <Link
+            to={`/department/${department_id}/employee/create`}
+            className="add-link"
+          >
+            {" "}
+            Add a new employee to 
+          </Link>
+        </div>
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <h3 className="title">Employees of {employees[0].department_name}</h3>
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>
@@ -53,8 +74,23 @@ export const GetEmployeesByDepartmentId = (id) => {
             ))}
           </tbody>
         </ReactBootStrap.Table>
-      <br/>
-        <Link to={`/department/${department_id}/employee/create`}  className="add-link"> Add a new employee to </Link>
-    </Container>
-  );
+        <br />
+        <div>
+          <Link
+            to={`/department/${department_id}/employee/create`}
+            className="add-link"
+          >
+            {" "}
+            Add a new employee to {employees[0].department_name}
+          </Link>
+        </div>
+        <div>
+          <Link to={`/department/${department_id}`} className="add-link">
+            {" "}
+            Back to {employees[0].department_name}
+          </Link>
+        </div>
+      </Container>
+    );
+  }
 };

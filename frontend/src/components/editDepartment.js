@@ -21,11 +21,8 @@ export const EditDepartment = () => {
   }, []);
 
   const handleChange = (event) => {
-    if (event.target.value !== "") {
-      department.department_name = event.target.value;
-    }
+    department.department_name = event.target.value;
     setDepartment({ ...department });
-    console.log(department);
     setDisabled(false);
   };
 
@@ -33,15 +30,19 @@ export const EditDepartment = () => {
     const request = {};
     if (department.department_name !== "") {
       request.name = department.department_name;
+      editDepartment(department_id, request).then((response) => {
+        if (response.success === false) {
+          setError(response.error);
+        } else {
+          setMessage(`You succesfully updated ${department.department_name}`);
+        }
+        setDisabled(true);
+      });
     }
-    editDepartment(department_id, request).then((response) => {
-      if (response.success === false) {
-        setError(response.error);
-      } else {
-        setMessage(`You succesfully updated ${department.department_name}`);
-      }
-      setDisabled(true);
-    });
+    else {
+      setMessage(`Enter a name of the department`);
+    }
+    
   };
 
   const handleKeyPress = (event) => {
@@ -55,15 +56,15 @@ export const EditDepartment = () => {
   } else {
     return (
       <Container>
-          <h4 className="title">Update department name </h4>
-          <input
-            className="input-data"
-            type="text"
-            value={department.department_name}
-            onChange={(event) => handleChange(event)}
-          ></input>
+        <h4 className="title">Update department name </h4>
+        <input
+          className="input-data"
+          type="text"
+          value={department.department_name}
+          onChange={(event) => handleChange(event)}
+        ></input>
 
-          {/* <h4>Update head of department</h4>
+        {/* <h4>Update head of department</h4>
           <input
             className="input-data"
             type="text"
@@ -71,19 +72,28 @@ export const EditDepartment = () => {
             onChange={(event) => handleChange(event)}
           ></input> */}
 
-          <div>
+        <div className="d-flex flex-row">
             <Button
-              className="my-3"
+              className="my-2"
               disabled={isDisabled}
               onKeyDown={handleKeyPress}
               onClick={saveUpdatedDepartment}
             >
               Save
             </Button>
-          </div>
-          <Link to="/department" className="view-all-dep-link">
-            View all departments
-          </Link>
+            <div>
+              <p className="message">
+                {error !== "" ? (
+                  <p style={{ color: "red" }}>{error}</p>
+                ) : (
+                  <p style={{ color: "green" }}>{message}</p>
+                )}
+              </p>
+            </div>
+        </div> <br/>
+        <Link to="/department" className="view-all-dep-link">
+          View all departments
+        </Link>
       </Container>
     );
   }
