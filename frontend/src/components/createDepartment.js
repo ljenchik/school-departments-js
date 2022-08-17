@@ -13,14 +13,14 @@ export const CreateDepartment = () => {
   const navigate = useNavigate();
 
   const handleChangeDepartmentName = (event) => {
-    department.name = event.target.value;
+    department.department_name = event.target.value;
     setDepartment(department);
   };
 
   const submit = (event) => {
     const request = {};
-    if (department.name !== "") {
-      request["name"] = department.name;
+    if (department.department_name !== "") {
+      request["name"] = department.department_name;
     }
     createDepartment(request).then((response) => {
       if (response.success === true) {
@@ -56,7 +56,7 @@ export const CreateDepartment = () => {
                 type="text"
                 placeholder="Enter a department name"
                 onChange={(event) => handleChangeDepartmentName(event)}
-                value={department.name}
+                value={department.department_name}
               ></input>
             </label>
           </div>

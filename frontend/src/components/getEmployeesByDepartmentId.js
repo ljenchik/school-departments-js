@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getEmployeesByDepartmentId } from "../apiClient";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import * as ReactBootStrap from "react-bootstrap";
+import "./css/getEmployeesByDepartmentId.css";
+import Container from "react-bootstrap/esm/Container";
 
 export const GetEmployeesByDepartmentId = (id) => {
   const [employees, setEmployees] = useState([]);
@@ -13,36 +16,45 @@ export const GetEmployeesByDepartmentId = (id) => {
       setEmployees(response)
     );
   }, []);
-  console.log(employees);
+
   return (
-    <div>
-      <div className="container">
-        <h3 className="my-4 mt-3">Employees of </h3>
-        <div className="row">
-          {employees.map((employee) => (
-            <div className="col-md-3" key={employee.id}>
-              <Link
-                to={`/employee/${employee.id}`}
-                className="edit-report-link"
-              >
-                Name {employee.name}
-              </Link><br/>
-              Name {employee.name} <br/>
-              Role {employee.role}<br/>
-              Address {employee.address}<br/>
-              Phone {employee.phone}<br/>
-              Email {employee.email}<br/>
-              Date of birth {employee.dob}<br/>
-              Salary {employee.salary}<br/>
-              Start date {employee.start_date}<br/>
-              Department {employee.department_id}
-     
-              <hr />
-              <br />
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    <Container>
+        <h3 className="title">Employees of ?????</h3>
+        <ReactBootStrap.Table striped bordered hover>
+          <thead>
+            <th>Name</th>
+            <th>Role</th>
+            <th>Date of birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Salary</th>
+            <th>Start date</th>
+          </thead>
+          <tbody>
+            {employees.map((employee) => (
+              <tr key={employee.id}>
+                <td>
+                  <Link
+                    to={`/employee/${employee.id}`}
+                    className="employee-link"
+                  >
+                    {employee.name}
+                  </Link>
+                </td>
+                <td>{employee.role}</td>
+                <td>{employee.dob}</td>
+                <td>{employee.address}</td>
+                <td>{employee.phone}</td>
+                <td>{employee.email}</td>
+                <td>£{employee.salary}</td>
+                <td>{employee.start_date}</td>
+              </tr>
+            ))}
+          </tbody>
+        </ReactBootStrap.Table>
+      <br/>
+        <Link to={`/department/${department_id}/employee/create`}  className="add-link"> Add a new employee to </Link>
+    </Container>
   );
 };

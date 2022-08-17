@@ -49,7 +49,7 @@ export const DepartmentInfo = () => {
     return (
       <div>
         <Container>
-          <h4 className="title">{department.name}</h4>
+          <h4 className="title">{department.department_name}</h4>
           <br />
           <div>Head of department </div> <br />
           <div>There are {department.count} members in this department</div>

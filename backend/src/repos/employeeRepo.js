@@ -6,15 +6,18 @@ export async function getAllEmployees() {
   }
 
 export async function getEmployeesByDepartmentId(id) {
-    return await knex("employee")
-    .where('department_id', id)
-}
+  return (await knex
+    .raw('select * from employee \
+      join department on employee.department_id = department.id\
+      where department.id = ' + id)
+  ).rows
+  }
 
 export async function getEmployeeById(id) {
-    return await knex("employee")
-    .where('id', id)
+  return await knex("employee")
+  .where('id', id)
 }
-
+    
 export async function createEmployee(department_id, employee) {
     const id = await knex("employee")
       .insert({

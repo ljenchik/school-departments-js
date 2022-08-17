@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getAllDepartments } from "../apiClient";
 import { Link } from "react-router-dom";
 import "./css/getAllDepartments.css";
+import Container from "react-bootstrap/esm/Container";
+
 export const GetAllDepartments = () => {
   const [departments, setDepartments] = useState([]);
 
@@ -10,23 +12,19 @@ export const GetAllDepartments = () => {
   }, []);
 
   return (
-    <div>
-      <div className="container">
-        <h3 className="my-4 mt-3">Departments</h3>
-        <div className="row">
+    <Container>
+        <h3 className="title">Departments</h3>
           {departments.map((department) => (
-            <div  className="col-md-3" key={department.id}>
+            <div key={department.id}>
               <Link to={`/department/${department.id}`} style={{ textDecoration: 'none' }}>
         {" "}
-        {department.name}{" "}
+        {department.department_name}{" "}
       </Link>
             </div>
           ))}
-        </div>
         <br/>
         <Link to="/department/create"  className="add-link"> Add a new department </Link>
-      </div>
-    </div>
+      </Container>
   );
 };
 

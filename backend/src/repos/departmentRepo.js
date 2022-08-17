@@ -4,7 +4,7 @@ import { knex } from "./database";
 
 export async function getAllDepartments() {
     return await knex("department")
-    .orderBy('department.name')
+    .orderBy('department.department_name')
   }
 
   export async function getDepartmentById(id) {
@@ -24,14 +24,14 @@ export async function getAllDepartments() {
   export async function createDepartment(departmentName) {
     const id = await knex("department")
       .insert({
-        name: departmentName,
+        department_name: departmentName,
       })
       .returning("id");
     return id[0].id;
   }
-  export async function updateDepartmentName(id, name) {
+  export async function updateDepartmentName(id, department_name) {
     return await knex("department")
-      .update({name})
+      .update({department_name})
       .where({id})
   }
 

@@ -22,7 +22,7 @@ export const EditDepartment = () => {
 
   const handleChange = (event) => {
     if (event.target.value !== "") {
-      department.name = event.target.value;
+      department.department_name = event.target.value;
     }
     setDepartment({ ...department });
     console.log(department);
@@ -31,14 +31,14 @@ export const EditDepartment = () => {
 
   const saveUpdatedDepartment = async () => {
     const request = {};
-    if (department.name !== "") {
-      request.name = department.name;
+    if (department.department_name !== "") {
+      request.name = department.department_name;
     }
     editDepartment(department_id, request).then((response) => {
       if (response.success === false) {
         setError(response.error);
       } else {
-        setMessage(`You succesfully updated ${department.name}`);
+        setMessage(`You succesfully updated ${department.department_name}`);
       }
       setDisabled(true);
     });
@@ -59,7 +59,7 @@ export const EditDepartment = () => {
           <input
             className="input-data"
             type="text"
-            value={department.name}
+            value={department.department_name}
             onChange={(event) => handleChange(event)}
           ></input>
 
