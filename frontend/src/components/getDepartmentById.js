@@ -10,7 +10,13 @@ import { Link } from "react-router-dom";
 import "./css/getDepartmentById.css";
 import Container from "react-bootstrap/esm/Container";
 import { EmployeeTable } from "./employeeTable";
-import * as ReactBootStrap from "react-bootstrap";
+
+const styles = {
+  customButton: {
+    padding: "0px",
+    textDecoration: "none",
+  },
+};
 
 export const DepartmentInfo = () => {
   const params = useParams();
@@ -52,7 +58,7 @@ export const DepartmentInfo = () => {
     setDisplayTable(true);
   };
 
-  if (department === undefined) {
+  if (department.avg === undefined && department.count === undefined) {
     return <div>Loading department ...</div>;
   } else {
     return (
@@ -62,15 +68,15 @@ export const DepartmentInfo = () => {
           {/* <div>Head of department </div> <br /> */}
           <div>There are {department.count} members in this department</div>
           <br />
-          <div>Average salary is £{department.avg}</div>
+          <div>Average salary is £{department.avg.toFixed(2)}</div>
           <br />
           <div className="d-flex flex-row">
-            <div class="btn-group">
+            <div>
               <Button className="btn btn-success my-2" onClick={editDepartment}>
                 Edit
               </Button>
             </div>
-            <div class="btn-group">
+            <div>
               <Button className="mx-2 my-2" onClick={deleteDepartment}>
                 Delete
               </Button>
@@ -84,20 +90,24 @@ export const DepartmentInfo = () => {
           <br />
 
           <Link
+            className="link_hover"
             to={`/department/${department_id}/employee/create`}
             style={{ textDecoration: "none" }}
           >
             Add employee to {department.department_name}
           </Link>
+
           <div>
             <Button
               variant="link"
-              class="blink btn btn-link p-0"
+              class="btn btn-link"
+              style={styles.customButton}
               onClick={displayEmployees}
             >
               View all employees of {department.department_name}
             </Button>
           </div>
+
           {displayTable ? <EmployeeTable {...props} /> : ""}
         </Container>
       </div>

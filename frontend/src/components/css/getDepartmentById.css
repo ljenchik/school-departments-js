@@ -8,7 +8,16 @@
     margin-left: 10px;
 }
 
-.blink {
-    text-decoration: none;
-    padding: 0px;
+.btn:focus {
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+.btn-link:hover {
+    color: green !important;
+    text-decoration: none !important;
+}
+
+.link_hover:hover {
+    color: green !important;
 }
