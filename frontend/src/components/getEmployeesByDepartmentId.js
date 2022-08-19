@@ -24,7 +24,7 @@ export const GetEmployeesByDepartmentId = (id) => {
   } else if (employees.length === 0 ) {
     return (
       <Container>
-        <h4 className="title">Employees of ???</h4>
+        <h4 className="title">Employees of </h4>
         <div>There are no employees in this department</div>
         <div>
           <Link

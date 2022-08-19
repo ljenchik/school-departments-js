@@ -19,7 +19,13 @@ export const CreateDepartment = () => {
 
   const submit = (event) => {
     const request = {};
-    if (department.department_name !== "") {
+    if (
+      department.department_name === "" ||
+      department.department_name === null ||
+      department.department_name === undefined
+    ) {
+      setError("Enter department name");
+    } else {
       request["name"] = department.department_name;
     }
     createDepartment(request).then((response) => {
@@ -28,7 +34,7 @@ export const CreateDepartment = () => {
       } else {
         setError(response.error);
       }
-    setDisabled(true);
+      setDisabled(true);
     });
   };
 
@@ -60,18 +66,27 @@ export const CreateDepartment = () => {
               ></input>
             </label>
           </div>
-          <div>
-            <Button
-              className="btn btn-success my-1"
-              disabled={isDisabled}
-              onClick={submit}
-            >
-              Submit
-            </Button>
-            <Button className="mx-2 my-1" onClick={reset}>
-              Reset
-            </Button>
-          </div>
+          <div className="d-flex">
+              <Button
+                className="btn btn-success my-3 mx-2"
+                disabled={isDisabled}
+                onClick={submit}
+              >
+                Submit
+              </Button>
+              <Button className="mx-2 my-3" onClick={reset}>
+                Reset
+              </Button>
+              <div className="error-message">
+                {error !== "" ? (
+                  <div style={{ color: "red" }}>
+                    {error}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
         </fieldset>
         <br />
         <div>

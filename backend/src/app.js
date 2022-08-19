@@ -16,6 +16,7 @@ import {
   updateEmployee,
   deleteEmployeeById,
 } from "./repos/employeeRepo";
+import { createEmployeeRequestValidation } from "./createEmployeeRequestValidation";
 
 const createApp = () => {
   const app = express();
@@ -148,14 +149,20 @@ const createApp = () => {
 
   app.post("/department/:id/employee/create", async (req, res) => {
     const requestBody = req.body;
-    var id = req.params.id;
-    const employeetId = await createEmployee(id, requestBody);
+    var department_id = req.params.id;
+
+    const validationResult = createEmployeeRequestValidation(requestBody);
+
+    if (!validationResult.success) {
+      return res.json(validationResult);
+    } else {
+    const employeeId = await createEmployee(department_id, requestBody);
     return res.json({
       success: true,
-      employee_id: employeetId,
-      department_id: id,
+      employee_id: employeeId,
+      department_id: department_id,
     });
-  });
+  }});
 
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;

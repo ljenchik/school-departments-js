@@ -11,6 +11,7 @@ import "./css/createEmployee.css";
 export const CreateEmployee = () => {
   const params = useParams();
   const department_id = params.id;
+  const [departmentName, setDepartmentName]= useState("");
   const [employee, setEmployee] = useState({
     name: "",
     role: "",
@@ -21,7 +22,6 @@ export const CreateEmployee = () => {
     start_date: "",
     salary: "",
     department_id: parseInt(department_id),
-    department_name: "",
   });
   const [error, setError] = useState("");
   const [isDisabled, setDisabled] = useState(false);
@@ -29,7 +29,7 @@ export const CreateEmployee = () => {
 
   useEffect(() => {
     getDepartmentById(department_id).then((response) => {
-      setEmployee(response[0]);
+      setDepartmentName(response[0].department_name);
     });
   }, []);
 
@@ -79,39 +79,32 @@ export const CreateEmployee = () => {
   };
 
   const reset = (event) => {
-    setEmployee({});
+    setEmployee({name: "",
+    role: "",
+    dob: "",
+    address: "",
+    phone: "",
+    email: "",
+    start_date: "",
+    salary: "",
+    department_id: parseInt(department_id)});
     setError("");
     setDisabled(false);
   };
 
   const submit = (event) => {
     const request = {};
-    if (employee.name !== "") {
-      request.name = employee.name;
-    }
-    if (employee.role !== "") {
-      request.role = employee.role;
-    }
-    if (employee.dob !== "") {
-      request.dob = employee.dob;
-    }
-    if (employee.address !== "") {
-      request.address = employee.address;
-    }
-    if (employee.phone !== "") {
-      request.phone = employee.phone;
-    }
-    if (employee.email !== "") {
-      request.email = employee.email;
-    }
-    if (employee.start_date !== "") {
-      request.start_date = employee.start_date;
-    }
-    if (employee.salary !== "") {
-      request.salary = employee.salary;
-    }
-    request.department_name = employee.department_name;
+    Object.entries(employee).forEach(([key, value]) => {
+      if (value !== "") {
+        request[key] = employee.key;
+      }
+      else {
+        setError("Fill in all fields");
+      }
+      }
+    )
     createEmployee(department_id, request).then((response) => {
+      console.log(response);
       if (response.success === true) {
         navigate(`/department/${department_id}/employee`);
       } else {
@@ -122,119 +115,119 @@ export const CreateEmployee = () => {
 
   return (
     <Container>
-      <h3 className="title">Add employee to {employee.department_name}</h3>
-      <fieldset className="fieldset" onKeyDown={handleKeyPress} tabIndex="0">
-        <hr />
+      <h3 className="title">Add employee to {departmentName}</h3>
+      <fieldset onKeyDown={handleKeyPress} tabIndex="0">
         <div>
           <label>
-            Name
+            Name 
+            </label> 
+            <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="text"
-              placeholder="Enter a name"
+              style={{ width: '75%' }}
+              placeholder="Enter name"
               onChange={(event) => handleChangeEmployeeName(event)}
               value={employee.name}
             ></input>
-          </label>
         </div>
-        <hr />
-
         <div>
           <label>
             Role
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="text"
-              placeholder="Enter a role"
+              style={{ width: '75%' }}
+              placeholder="Enter role"
               onChange={(event) => handleChangeEmployeeRole(event)}
               value={employee.role}
             ></input>
-          </label>
         </div>
-        <hr />
+
 
         <div>
           <label>
             Date of birth
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="date"
+              style={{ width: '75%' }}
               onChange={(event) => handleChangeEmployeeDob(event)}
               value={employee.dob}
             ></input>
-          </label>
         </div>
-        <hr />
 
         <div>
           <label>
             Address
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="address"
-              placeholder="Enter an address"
+              style={{ width: '75%' }}
+              placeholder="Enter address"
               onChange={(event) => handleChangeEmployeeAddress(event)}
               value={employee.address}
             ></input>
-          </label>
         </div>
-        <hr />
 
         <div>
           <label>
             Phone
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="phone"
-              placeholder="Enter an address"
+              style={{ width: '75%' }}
+              placeholder="Enter phone number"
               onChange={(event) => handleChangeEmployeePhone(event)}
               value={employee.phone}
             ></input>
-          </label>
         </div>
-        <hr />
 
         <div>
           <label>
             Email
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="email"
-              placeholder="Enter an email"
+              style={{ width: '75%' }}
+              placeholder="Enter email address"
               onChange={(event) => handleChangeEmployeeEmail(event)}
               value={employee.email}
             ></input>
-          </label>
         </div>
-        <hr />
 
         <div>
           <label>
             Start date
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="date"
+              style={{ width: '75%' }}
               onChange={(event) => handleChangeEmployeeStartDate(event)}
               value={employee.start_date}
             ></input>
-          </label>
         </div>
-        <hr />
 
         <div>
           <label>
             Salary £
+            </label> <br/>
             <input
-              className="input-large-large search-query mx-3"
+              className="input-large-large search-query my-2 mb-3"
               type="number"
+              style={{ width: '75%' }}
               onChange={(event) => handleChangeEmployeeSalary(event)}
               value={employee.salary}
             ></input>
-          </label>
         </div>
-        <hr />
 
-        <div>
+        <div className="d-flex flex-row">
           <Button
             className="btn btn-success my-4"
             disabled={isDisabled}
@@ -245,13 +238,17 @@ export const CreateEmployee = () => {
           <Button className="mx-2 my-4" onClick={reset}>
             Reset
           </Button>
+          <p className="error">
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
+              </p>
+
         </div>
       </fieldset>
 
       <div>
-        <Link to="/department" className="link">
+        <Link to={`/department/${department_id}/employee`} className="link">
           {" "}
-          View all employees of {employee.department_name}
+          View all employees of {departmentName}
         </Link>
       </div>
       <div>
