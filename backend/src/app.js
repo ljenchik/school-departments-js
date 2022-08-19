@@ -56,7 +56,7 @@ const createApp = () => {
     }
     catch (e) {
       res.status(500);
-      return res.json({ success: false, id: "", error: e.detail });
+      return res.send(e.toString());
     }
     
   });

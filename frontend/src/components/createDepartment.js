@@ -22,11 +22,11 @@ export const CreateDepartment = () => {
 
   const submit = (event) => {
     const request = {};
-    if (department.department_name !== "") {
+    if (department.department_name) {
       request.name = department.department_name;
       createDepartment(request).then((response) => {
         if (response.success === false) {
-          setError("Enter department name");
+          setError(response.error);
         } else {
           setMessage(`You succesfully added ${department.department_name}`);
           //navigate(`/department`);
@@ -35,7 +35,7 @@ export const CreateDepartment = () => {
       });
     } 
     else {
-      setError("Enter department name");
+    setError("Enter department name");
     }
   };
 

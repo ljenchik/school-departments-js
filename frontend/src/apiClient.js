@@ -28,7 +28,8 @@ export async function createDepartment(department) {
       }
     }
     else {
-      const error = response.text();
+      const error = await response.text();
+      console.log(error);
       return { success: false, id: "", error: error };
     }
     
