@@ -66,7 +66,7 @@ export const DepartmentInfo = () => {
         <Container>
           <h4 className="title">{department.department_name}</h4>
           {/* <div>Head of department </div> <br /> */}
-          <div>There are {department.count} members in this department</div>
+          <div >There are {department.count} members in this department</div>
           <br />
           <div>Average salary is £{department.avg.toFixed(2)}</div>
           <br />
@@ -107,7 +107,7 @@ export const DepartmentInfo = () => {
               View all employees of {department.department_name}
             </Button>
           </div>
-
+        <br/>
           {displayTable ? <EmployeeTable {...props} /> : ""}
         </Container>
       </div>

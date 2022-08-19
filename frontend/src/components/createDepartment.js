@@ -70,6 +70,7 @@ export const CreateDepartment = () => {
               <Button
                 className="btn btn-success my-3 mx-2"
                 disabled={isDisabled}
+                onKeyDown={handleKeyPress}
                 onClick={submit}
               >
                 Submit

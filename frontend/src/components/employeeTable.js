@@ -7,13 +7,13 @@ import Container from "react-bootstrap/esm/Container";
 export const EmployeeTable = ({department, employees}) => {
     
         if (employees === undefined) {
-            return <div>Loading data ... </div>
+            return <div style={{color: "red"}}>Loading data ... </div>
         }
         if (employees.length === 0) {
-            return <div>There are no employees in this department</div>
+            return <div style={{color: "red"}}>There are no employees in this department</div>
         }
         if (!Array.isArray(employees)) {
-            return <div>There are no employees in this department</div>
+            return <div style={{color: "red"}}>There are no employees in this department</div>
         }
         return (
         <Container>

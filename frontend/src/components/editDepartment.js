@@ -74,22 +74,20 @@ export const EditDepartment = () => {
 
         <div className="d-flex flex-row">
             <Button
-              className="my-2"
+              className="mx-2 my-3"
               disabled={isDisabled}
               onKeyDown={handleKeyPress}
               onClick={saveUpdatedDepartment}
             >
               Save
             </Button>
-            <div>
-              <p className="message">
+              <div className="message">
                 {error !== "" ? (
-                  <p style={{ color: "red" }}>{error}</p>
+                  <div style={{ color: "red" }}>{error}</div>
                 ) : (
-                  <p style={{ color: "green" }}>{message}</p>
+                  <div style={{ color: "green" }}>{message}</div>
                 )}
-              </p>
-            </div>
+              </div>
         </div> <br/>
         <Link to="/department" className="view-all-dep-link">
           View all departments
