@@ -32,7 +32,7 @@ export async function getAllDepartments() {
   export async function updateDepartmentName(id, department_name) {
     return await knex("department")
       .update({department_name})
-      .where({id})
+      .where("id", id)
   }
 
   export async function deleteDepartmentById(id) {

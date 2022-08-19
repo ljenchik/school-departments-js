@@ -44,15 +44,23 @@ const createApp = () => {
         return res.json(department);
       }
     } catch (err) {
-      console.log(err.message);
+      console.log(err);
     }
   });
 
   app.post("/department/create", async (req, res) => {
     const requestBody = req.body;
-    const departmentId = await createDepartment(requestBody.name);
-    return res.json({ success: true, id: departmentId });
+    try {
+      const departmentId = await createDepartment(requestBody.name);
+      return res.json({ success: true, id: departmentId, error: ""});
+    }
+    catch (e) {
+      res.status(500);
+      return res.json({ success: false, id: "", error: e.detail });
+    }
+    
   });
+
 
   app.put("/department/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;

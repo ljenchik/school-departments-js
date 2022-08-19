@@ -9,33 +9,34 @@ import Container from "react-bootstrap/esm/Container";
 export const CreateDepartment = () => {
   const [department, setDepartment] = useState({});
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [isDisabled, setDisabled] = useState(false);
   const navigate = useNavigate();
 
   const handleChangeDepartmentName = (event) => {
-    department.department_name = event.target.value;
-    setDepartment(department);
+    setDepartment({department_name : event.target.value});
+    if (department.department_name !== "") {
+      setError("");
+    }
   };
 
   const submit = (event) => {
     const request = {};
-    if (
-      department.department_name === "" ||
-      department.department_name === null ||
-      department.department_name === undefined
-    ) {
+    if (department.department_name !== "") {
+      request.name = department.department_name;
+      createDepartment(request).then((response) => {
+        if (response.success === false) {
+          setError("Enter department name");
+        } else {
+          setMessage(`You succesfully added ${department.department_name}`);
+          //navigate(`/department`);
+        }
+        setDisabled(true);
+      });
+    } 
+    else {
       setError("Enter department name");
-    } else {
-      request["name"] = department.department_name;
     }
-    createDepartment(request).then((response) => {
-      if (response.success === true) {
-        navigate(`/department`);
-      } else {
-        setError(response.error);
-      }
-      setDisabled(true);
-    });
   };
 
   const handleKeyPress = (event) => {
@@ -45,8 +46,9 @@ export const CreateDepartment = () => {
   };
 
   const reset = (event) => {
-    setDepartment({});
+    setDepartment({department_name: ""});
     setError("");
+    setMessage("");
     setDisabled(false);
   };
 
@@ -60,34 +62,32 @@ export const CreateDepartment = () => {
               <input
                 className="dep-name-input"
                 type="text"
-                placeholder="Enter a department name"
-                onChange={(event) => handleChangeDepartmentName(event)}
+                placeholder="Enter department name"
                 value={department.department_name}
+                onChange={(event) => handleChangeDepartmentName(event)}
               ></input>
             </label>
           </div>
           <div className="d-flex">
-              <Button
-                className="btn btn-success my-3 mx-2"
-                disabled={isDisabled}
-                onKeyDown={handleKeyPress}
-                onClick={submit}
-              >
-                Submit
-              </Button>
-              <Button className="mx-2 my-3" onClick={reset}>
-                Reset
-              </Button>
-              <div className="error-message">
+            <Button
+              className="btn btn-success my-3 mx-2"
+              disabled={isDisabled}
+              onKeyDown={handleKeyPress}
+              onClick={submit}
+            >
+              Submit
+            </Button>
+            <Button className="mx-2 my-3" onClick={reset} >
+              Reset
+            </Button>
+            <div className="error-message">
                 {error !== "" ? (
-                  <div style={{ color: "red" }}>
-                    {error}
-                  </div>
+                  <div style={{ color: "red" }}>{error}</div>
                 ) : (
-                  ""
+                  <div style={{ color: "green" }}>{message}</div>
                 )}
               </div>
-            </div>
+          </div>
         </fieldset>
         <br />
         <div>

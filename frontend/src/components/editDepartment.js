@@ -24,6 +24,9 @@ export const EditDepartment = () => {
     department.department_name = event.target.value;
     setDepartment({ ...department });
     setDisabled(false);
+    if (department.department_name !== "") {
+      setError("");
+    }
   };
 
   const saveUpdatedDepartment = async () => {
@@ -34,13 +37,13 @@ export const EditDepartment = () => {
         if (response.success === false) {
           setError(response.error);
         } else {
-          setMessage(`You succesfully updated ${department.department_name}`);
+          setMessage("You succesfully updated department name");
         }
         setDisabled(true);
       });
     }
     else {
-      setMessage(`Enter a name of the department`);
+      setError("Enter department name");
     }
     
   };
