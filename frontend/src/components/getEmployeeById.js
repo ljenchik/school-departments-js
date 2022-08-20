@@ -15,8 +15,6 @@ export const GetEmployeeById = () => {
   useEffect(() => {
     getEmployeeById(employee_id).then((response) => setEmployee(response[0]));
   }, []);
-  console.log(employee);
-
 
   const deleteEmployee = () => {
     deleteEmployeeById(employee_id)

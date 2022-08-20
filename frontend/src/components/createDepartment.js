@@ -26,7 +26,10 @@ export const CreateDepartment = () => {
       request.name = department.department_name;
       createDepartment(request).then((response) => {
         if (response.success === false) {
-          setError(response.error);
+          if (response.error.includes("duplicate key value violates unique constraint")) {
+            setError("Department with this name already exists");
+          }
+          else {setError(response.error);}
         } else {
           setMessage(`You succesfully added ${department.department_name}`);
           //navigate(`/department`);

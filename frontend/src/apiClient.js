@@ -26,43 +26,56 @@ export async function createDepartment(department) {
       } else {
         return { success: true, id: data.department_id, error: "" };
       }
-    }
-    else {
+    } else {
       const error = await response.text();
-      console.log(error);
       return { success: false, id: "", error: error };
     }
-    
   } catch (e) {
     return { success: false, id: "", error: e };
   }
 }
 
 export async function editDepartment(id, updatedDepartment) {
-  const response = await fetch(`${baseurl}/department/${id}/edit`, {
-    method: "PUT",
-    body: JSON.stringify(updatedDepartment),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  if (!data.success) {
-    return { error: data.message, success: false };
-  } else {
-    return { error: "", success: true };
+  try {
+    const response = await fetch(`${baseurl}/department/${id}/edit`, {
+      method: "PUT",
+      body: JSON.stringify(updatedDepartment),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (!data.success) {
+        return { success: false, error: data.message };
+      } else {
+        return { success: true, error: "" };
+      }
+    } else {
+      const error = await response.text();
+      return { success: false, error: error };
+    }
+  } catch (e) {
+    return { success: false, error: e };
   }
 }
 
 export async function deleteDepartmentById(id) {
-  const response = await fetch(`${baseurl}/department/${id}/delete`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.status !== 200) {
-    throw "You can't delete department with employees";
+  try {
+    const response = await fetch(`${baseurl}/department/${id}/delete`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.success === true) {
+      return { success: true, error: "" };
+    } else {
+      const error = await response.text();
+      return { success: false, error: error };
+    }
+  } catch (e) {
+    return { success: false, error: e };
   }
 }
 

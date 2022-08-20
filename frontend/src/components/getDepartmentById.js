@@ -42,11 +42,15 @@ export const DepartmentInfo = () => {
 
   const deleteDepartment = () => {
     deleteDepartmentById(department_id)
-      .then(() => navigate("/department"))
-      .catch((err) => {
-        setError(err);
-      });
-  };
+      .then((response) => {
+        if (response.success === false) {
+          setError("You can't delete department with employees");
+          }
+          else {
+            navigate("/department");
+          }
+        }
+      )};
 
   const editDepartment = () => {
     getDepartmentById(department_id).then((response) =>
@@ -83,7 +87,7 @@ export const DepartmentInfo = () => {
             </div>
             <div>
               <p className="error">
-                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
+                <p style={{ color: "red" }}>{error}</p>
               </p>
             </div>
           </div>

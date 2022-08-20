@@ -44,7 +44,8 @@ const createApp = () => {
         return res.json(department);
       }
     } catch (err) {
-      console.log(err);
+      res.status(500);
+      return res.send(e.toString());
     }
   });
 
@@ -52,55 +53,47 @@ const createApp = () => {
     const requestBody = req.body;
     try {
       const departmentId = await createDepartment(requestBody.name);
-      return res.json({ success: true, id: departmentId, error: ""});
-    }
-    catch (e) {
+      return res.json({ success: true, id: departmentId, error: "" });
+    } catch (e) {
       res.status(500);
       return res.send(e.toString());
     }
-    
   });
-
 
   app.put("/department/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;
     const requestBody = req.body;
-    await updateDepartmentName(id, requestBody.name);
-    return res.json({ success: true });
+    try {
+      await updateDepartmentName(id, requestBody.name);
+      return res.json({ success: true, error: "" });
+    } catch (e) {
+      res.status(500);
+      return res.send(e.toString());
+    }
   });
 
   app.delete("/department/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;
     try {
       const response = await getDepartmentById(id);
-      if (!response) {
-        throw new Error("This department doesn't exist");
-      } else {
-        try {
-          if (response[0].count !== '0') {
-            throw new Error("Impossible to delete department with employees");
-          } else {
+        if (response[0].count === "0") {
+          try {
             await deleteDepartmentById(id);
-            res.sendStatus(200);
-            // return res.json({
-            //   status: 200,
-            //   error: ""
-            // })
+            return res.json({ success: true, error: "" });
+          } catch (e) {
+            res.status(500);
+            return res.send(e.toString());
           }
-        } catch (err) {
-          res.sendStatus(500);
-      // return res.json({
-      //   status: 500,
-      //   error: "Impossible to delete department with employees"
-      // })
-        }
+        } else {
+          res.status(500);
+          return res.json({
+            success: false,
+            error: "You can't delete department with employees",
+          });
       }
-    } catch (e) {
-      res.sendStatus(404);
-      // return res.json({
-      //   status: 500,
-      //   error: "This department doesn't exist"
-      // })
+    } catch (err) {
+      res.status(500);
+      return res.send(e.toString());
     }
   });
 
@@ -164,13 +157,14 @@ const createApp = () => {
     if (!validationResult.success) {
       return res.json(validationResult);
     } else {
-    const employeeId = await createEmployee(department_id, requestBody);
-    return res.json({
-      success: true,
-      employee_id: employeeId,
-      department_id: department_id,
-    });
-  }});
+      const employeeId = await createEmployee(department_id, requestBody);
+      return res.json({
+        success: true,
+        employee_id: employeeId,
+        department_id: department_id,
+      });
+    }
+  });
 
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;
