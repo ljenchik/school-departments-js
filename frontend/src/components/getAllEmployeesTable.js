@@ -21,8 +21,7 @@ export const GetAllEmployeesTable = ({employees}) => {
             <th>Name</th>
             <th>Department</th>
             <th>Role</th>
-            <th>Subjects</th>
-            <th>Classes</th>
+           
           </thead>
           <tbody>
             {employees.map((employee) => (

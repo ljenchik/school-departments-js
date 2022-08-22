@@ -43,7 +43,7 @@ const createApp = () => {
         }
         return res.json(department);
       }
-    } catch (err) {
+    } catch (e) {
       res.status(500);
       return res.send(e.toString());
     }
@@ -91,7 +91,7 @@ const createApp = () => {
             error: "You can't delete department with employees",
           });
       }
-    } catch (err) {
+    } catch (e) {
       res.status(500);
       return res.send(e.toString());
     }

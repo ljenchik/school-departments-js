@@ -43,11 +43,12 @@ export const DepartmentInfo = () => {
   const deleteDepartment = () => {
     deleteDepartmentById(department_id)
       .then((response) => {
-        if (response.success === false) {
-          setError("You can't delete department with employees");
+          if (response.success === true) {
+          setError(response.error);
+          navigate("/department");
           }
           else {
-            navigate("/department");
+            setError("You can't delete department with employees");
           }
         }
       )};
@@ -114,7 +115,6 @@ export const DepartmentInfo = () => {
             Add employee to {department.department_name}
           </Link>
 
-          
         <br/>
           {displayTable ? <EmployeeTable {...props} /> : ""}
         </Container>

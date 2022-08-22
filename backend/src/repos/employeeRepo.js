@@ -2,16 +2,16 @@ import { knex } from "./database";
 
 export async function getAllEmployees() {
   return (await knex
-    .raw('select employee.id, employee.name, department.department_name, department.id, employee.role\
-    from employee join department on employee.department_id = department.id order by employee.name')
+    .raw('select e.*, d.department_name from employee e\
+    join department d on e.department_id=d.id')
   ).rows
   }
 
 export async function getEmployeesByDepartmentId(id) {
   return (await knex
-    .raw('select * from employee \
-      join department on employee.department_id = department.id\
-      where department.id = ' + id)
+    .raw('select e.*, d.department_name from employee e\
+    join department d on d.id=e.department_id\
+    where e.department_id= ' + id)
   ).rows
   }
 

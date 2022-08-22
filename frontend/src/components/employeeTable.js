@@ -16,18 +16,18 @@ export const EmployeeTable = ({department, employees}) => {
             return <div style={{color: "red"}}>There are no employees in this department</div>
         }
         return (
-        <Container>
+        <Container style={{"padding": "0px"}}>
         <h3 className="title">Employees of {department.department_name}</h3>
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>
             <th>Role</th>
-            <th>Date of birth</th>
+            {/* <th>Date of birth</th>
             <th>Address</th>
             <th>Phone</th>
             <th>Email</th>
             <th>Salary</th>
-            <th>Start date</th>
+            <th>Start date</th> */}
           </thead>
           <tbody>
             {employees.map((employee) => (
@@ -38,12 +38,12 @@ export const EmployeeTable = ({department, employees}) => {
                   </Link>
                 </td>
                 <td>{employee.role}</td>
-                <td>{employee.dob}</td>
+                {/* <td>{employee.dob}</td>
                 <td>{employee.address}</td>
                 <td>{employee.phone}</td>
                 <td>{employee.email}</td>
                 <td>£{employee.salary}</td>
-                <td>{employee.start_date}</td>
+                <td>{employee.start_date}</td> */}
               </tr>
             ))}
           </tbody>

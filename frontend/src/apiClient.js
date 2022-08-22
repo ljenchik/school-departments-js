@@ -68,7 +68,7 @@ export async function deleteDepartmentById(id) {
         "Content-Type": "application/json",
       },
     });
-    if (response.success === true) {
+    if (response.ok) {
       return { success: true, error: "" };
     } else {
       const error = await response.text();

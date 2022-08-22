@@ -43,11 +43,12 @@ export const EditDepartment = () => {
           setMessage(`You succesfully added ${department.department_name}`);
           //navigate(`/department`);
         }
-        setDisabled(true);
       });
+      setDisabled(true);
     } 
     else {
     setError("Enter department name");
+    setDisabled(false);
     }
   };
 
