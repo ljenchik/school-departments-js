@@ -93,13 +93,7 @@ export const DepartmentInfo = () => {
           </div>
           <br />
 
-          <Link
-            className="link_hover"
-            to={`/department/${department_id}/employee/create`}
-            style={{ textDecoration: "none" }}
-          >
-            Add employee to {department.department_name}
-          </Link>
+          
 
           <div>
             <Button
@@ -111,6 +105,16 @@ export const DepartmentInfo = () => {
               View all employees of {department.department_name}
             </Button>
           </div>
+
+          <Link
+            className="link_hover"
+            to={`/department/${department_id}/employee/create`}
+            style={{ textDecoration: "none" }}
+          >
+            Add employee to {department.department_name}
+          </Link>
+
+          
         <br/>
           {displayTable ? <EmployeeTable {...props} /> : ""}
         </Container>

@@ -1,8 +1,10 @@
 import { knex } from "./database";
 
 export async function getAllEmployees() {
-    return await knex("employee")
-    .orderBy('employee.name')
+  return (await knex
+    .raw('select employee.id, employee.name, department.department_name, department.id, employee.role\
+    from employee join department on employee.department_id = department.id order by employee.name')
+  ).rows
   }
 
 export async function getEmployeesByDepartmentId(id) {

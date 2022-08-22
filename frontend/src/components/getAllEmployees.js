@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getAllEmployees } from "../apiClient";
 import { Link } from "react-router-dom";
+import { GetAllEmployeesTable } from "./getAllEmployeesTable";
 
 export const GetAllEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -12,30 +13,8 @@ export const GetAllEmployees = () => {
   return (
     <div>
       <div className="container">
-        <h3 className="my-4 mt-3">Employees of </h3>
-        <div className="row">
-          {employees.map((employee) => (
-            <div  className="col-md-3" key={employee.id}>
-              <Link
-                to={`/employee/${employee.id}`}
-                className="edit-report-link"
-              >
-                Name {employee.name}
-              </Link><br/>
-              Name {employee.name} <br/>
-              Role {employee.role}<br/>
-              Address {employee.address}<br/>
-              Phone {employee.phone}<br/>
-              Email {employee.email}<br/>
-              Date of birth {employee.dob}<br/>
-              Salary {employee.salary}<br/>
-              Start date {employee.start_date}<br/>
-              Department {employee.department_id}
-     
-            <hr/><br/>
-            </div>
-          ))}
-        </div>
+        <h3 className="my-4 mt-3">Employees</h3>
+        <GetAllEmployeesTable employees={employees}/>
       </div>
     </div>
   );

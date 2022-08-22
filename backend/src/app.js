@@ -99,18 +99,18 @@ const createApp = () => {
 
   app.get("/employee", async (req, res) => {
     const employees = await getAllEmployees();
-    for (var i = 0; i < employees.length; i++) {
-      employees[i].dob = employees[i].dob
-        .toLocaleDateString()
-        .split("/")
-        .reverse()
-        .join("-");
-      employees[i].start_date = employees[i].start_date
-        .toLocaleDateString()
-        .split("/")
-        .reverse()
-        .join("-");
-    }
+    // for (var i = 0; i < employees.length; i++) {
+    //   employees[i].dob = employees[i].dob
+    //     .toLocaleDateString()
+    //     .split("/")
+    //     .reverse()
+    //     .join("-");
+    //   employees[i].start_date = employees[i].start_date
+    //     .toLocaleDateString()
+    //     .split("/")
+    //     .reverse()
+    //     .join("-");
+    // }
     return res.json(employees);
   });
 
