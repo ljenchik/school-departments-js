@@ -36,7 +36,6 @@ export const CreateEmployee = () => {
 
   const handleChangeEmployeeName = (event) => {
     employee.name = event.target.value;
-    console.log(employee.name);
     setEmployee({ ...employee });
   };
 
@@ -104,20 +103,14 @@ export const CreateEmployee = () => {
   const submit = (event) => {
     const request = {};
     Object.entries(employee).forEach(([key, value]) => {
-      console.log(key, value);
-      if (key !== "photo" && value !== "") {
         request[key] = value;
-      }
-      else {
-        setError("Fill in all required fields");
-      }
       }
     )
     createEmployee(department_id, request).then((response) => {
-      if (response.success === true) {
-        navigate(`/department/${department_id}`);
+      if (!response.success) { 
+        setError(response.error.slice(1, -1));
       } else {
-        setError(response.error);
+        navigate(`/department/${department_id}`);
       }
     });
   };

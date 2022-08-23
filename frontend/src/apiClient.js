@@ -95,31 +95,40 @@ export async function getEmployeesByDepartmentId(id) {
 }
 
 export async function createEmployee(department_id, employee) {
-  const response = await fetch(
-    `${baseurl}/department/${department_id}/employee/create`,
-    {
-      method: "POST",
-      body: JSON.stringify(employee),
-      headers: {
-        "Content-Type": "application/json",
-      },
+  try {
+    const response = await fetch(
+      `${baseurl}/department/${department_id}/employee/create`,
+      {
+        method: "POST",
+        body: JSON.stringify(employee),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      const data = await response.json();
+      if (!data.success) {
+        return {
+          success: false,
+          error: data.error,
+          department_id: "",
+          employee_id: "",
+        };
+      } else {
+        return {
+          success: true,
+          error: "",
+          department_id: data.department_id,
+          employee_id: data.employee_id,
+        };
+      }
+    } else {
+      const error = await response.text();
+      return { success: false, id: "", error: error };
     }
-  );
-  const data = await response.json();
-  if (!data.success) {
-    return {
-      error: data.message,
-      employee_id: "",
-      department_id: "",
-      success: false,
-    };
-  } else {
-    return {
-      error: "",
-      department_id: data.department_id,
-      employee_id: data.employee_id,
-      success: true,
-    };
+  } catch (e) {
+    return { success: false, id: "", error: e };
   }
 }
 
