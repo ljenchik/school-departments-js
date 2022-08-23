@@ -44,6 +44,7 @@ export const GetEmployeesByDepartmentId = (id) => {
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>
+            <th>Photo</th>
             <th>Role</th>
             <th>Date of birth</th>
             <th>Address</th>
@@ -62,7 +63,16 @@ export const GetEmployeesByDepartmentId = (id) => {
                   >
                     {employee.name}
                   </Link>
-                </td>
+                  </td>
+                <td> 
+                  
+                   <Link
+            to={`/employee/${id}`}
+          >
+            <img className="employee-photo" src={employee.photo} />
+          </Link>
+         
+                  </td>
                 <td>{employee.role}</td>
                 <td>{employee.dob}</td>
                 <td>{employee.address}</td>

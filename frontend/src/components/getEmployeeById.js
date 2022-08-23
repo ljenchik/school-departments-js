@@ -4,11 +4,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
 import { deleteEmployeeById } from "../apiClient";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-
-
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import "./css/getEmployeeById.css";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 export const GetEmployeeById = () => {
   const [employee, setEmployee] = useState([]);
@@ -30,84 +31,120 @@ export const GetEmployeeById = () => {
   };
 
   const editEmployee = () => {
-    getEmployeeById(employee_id).then((response) => navigate(`/employee/${employee_id}/edit`));
+    getEmployeeById(employee_id).then((response) =>
+      navigate(`/employee/${employee_id}/edit`)
+    );
   };
 
   if (employee === undefined) {
     return <div>Loading report ...</div>;
   } else {
-  return (
-    <Container style={{"margin-top": "80px"}}>
-      <Row>
-        <Col>Name</Col>
-        <Col xs={10}>{employee.name}</Col>
-      </Row> 
+    return (
+      <Container style={{ "margin-top": "80px" }}>
+        <div className="flex-container">
+          <div>
+            {employee.photo ? (
+              <div className="flex-left">
+                <img className="photo" src={employee.photo} />
+              </div>
+            ) : (
+              <div className="flex-left">
+                <OverlayTrigger
+                  overlay={<Tooltip>Add employee photo</Tooltip>}
+                >
+                  {({ ref, ...triggerHandler }) => (
+                    <Link ref={ref}
+                      to={`/department/${employee.department_id}/employee/edit`}
+                      variant="light"
+                      {...triggerHandler}
+                    >
+                      <img
+                        className="employee-photo"
+                        src="https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg"
+                      />
+                    </Link>
+                  )}
+                </OverlayTrigger>
+              </div>
+            )}
+          </div>
 
-      <Row>
-        <Col>Department</Col>
-        <Col xs={10}>{employee.department_name}</Col>
-      </Row> 
+          <div className="flex-right">
+            <Row>
+              <Col>Name</Col>
+              <Col xs={9}>{employee.name}</Col>
+            </Row>
 
-      <Row>
-        <Col>Role</Col>
-        <Col xs={10}>{employee.role}</Col>
-      </Row> 
+            <Row>
+              <Col>Department</Col>
+              <Col xs={9}>{employee.department_name}</Col>
+            </Row>
 
-      <Row>
-        <Col>Address</Col>
-        <Col xs={10}>{employee.address}</Col>
-      </Row> 
+            <Row>
+              <Col>Role</Col>
+              <Col xs={9}>{employee.role}</Col>
+            </Row>
 
-      <Row>
-        <Col>Phone</Col>
-        <Col xs={10}>{employee.phone}</Col>
-      </Row> 
+            <Row>
+              <Col>Address</Col>
+              <Col xs={9}>{employee.address}</Col>
+            </Row>
 
-      <Row>
-        <Col>Email</Col>
-        <Col xs={10}>{employee.email}</Col>
-      </Row> 
+            <Row>
+              <Col>Phone</Col>
+              <Col xs={9}>{employee.phone}</Col>
+            </Row>
 
-      <Row>
-        <Col>Salary</Col>
-        <Col xs={10}>£{employee.salary}</Col>
-      </Row> 
+            <Row>
+              <Col>Email</Col>
+              <Col xs={9}>{employee.email}</Col>
+            </Row>
 
-      <Row>
-        <Col>Hiring date</Col>
-        <Col xs={10}>{employee.start_date}</Col>
-      </Row> 
+            <Row>
+              <Col>Salary</Col>
+              <Col xs={9}>£{employee.salary}</Col>
+            </Row>
 
-      <br/>
-      <div className="d-flex flex-row">
-      <Button className="btn btn-success my-2" onClick={editEmployee}>
-      Edit
-    </Button>
-    <Button className="mx-2 my-2" onClick={deleteEmployee}>
-      Delete
-    </Button>
-    </div>
-    <br/>
-    <div>
-        <Link to={`/department/${employee.department_id}/employee`} className="link">
-          {" "}
-          View all employees of {employee.department_name}
-        </Link>
-      </div>
-      <div>
-        <Link to="/department" className="link">
-          {" "}
-          View all departments{" "}
-        </Link>
-      </div>
-      <div>
-        <Link to="/employee" className="link">
-          {" "}
-          View all employees{" "}
-        </Link>
-      </div>
+            <Row>
+              <Col>Hiring date</Col>
+              <Col xs={9}>{employee.start_date}</Col>
+            </Row>
+          </div>
+          {/* </Row> */}
+        </div>
 
-   </Container> 
-  );
+        <br />
+        <div className="d-flex flex-row">
+          <Button className="btn btn-success my-2" onClick={editEmployee}>
+            Edit
+          </Button>
+          <Button className="mx-2 my-2" onClick={deleteEmployee}>
+            Delete
+          </Button>
+        </div>
+        <br />
+        <div>
+          <Link
+            to={`/department/${employee.department_id}/employee`}
+            className="link"
+          >
+            {" "}
+            View all employees of {employee.department_name}
+          </Link>
+        </div>
+        <div>
+          <Link to="/department" className="link">
+            {" "}
+            View all departments{" "}
+          </Link>
+        </div>
+        <div>
+          <Link to="/employee" className="link">
+            {" "}
+            View all employees{" "}
+          </Link>
+        </div>
+      </Container>
+    );
+  }
 };
-}

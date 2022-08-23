@@ -6,3 +6,9 @@
     margin-top: 70px;
     margin-bottom: 20px;
  }
+
+ .employee-photo{
+   width: 24vw;
+   height:auto;
+   padding-right: 20px;
+ }

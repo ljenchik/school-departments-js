@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request } from "express";
 import { json } from "body-parser";
 import cors from "cors";
 import {
@@ -76,20 +76,20 @@ const createApp = () => {
     var id = req.params.id;
     try {
       const response = await getDepartmentById(id);
-        if (response[0].count === "0") {
-          try {
-            await deleteDepartmentById(id);
-            return res.json({ success: true, error: "" });
-          } catch (e) {
-            res.status(500);
-            return res.send(e.toString());
-          }
-        } else {
+      if (response[0].count === "0") {
+        try {
+          await deleteDepartmentById(id);
+          return res.json({ success: true, error: "" });
+        } catch (e) {
           res.status(500);
-          return res.json({
-            success: false,
-            error: "You can't delete department with employees",
-          });
+          return res.send(e.toString());
+        }
+      } else {
+        res.status(500);
+        return res.json({
+          success: false,
+          error: "You can't delete department with employees",
+        });
       }
     } catch (e) {
       res.status(500);
@@ -151,19 +151,12 @@ const createApp = () => {
   app.post("/department/:id/employee/create", async (req, res) => {
     const requestBody = req.body;
     var department_id = req.params.id;
-
-    const validationResult = createEmployeeRequestValidation(requestBody);
-
-    if (!validationResult.success) {
-      return res.json(validationResult);
-    } else {
-      const employeeId = await createEmployee(department_id, requestBody);
-      return res.json({
-        success: true,
-        employee_id: employeeId,
-        department_id: department_id,
-      });
-    }
+    const employeeId = await createEmployee(department_id, requestBody);
+    return res.json({
+      success: true,
+      employee_id: employeeId,
+      department_id: department_id,
+    });
   });
 
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
@@ -178,7 +171,8 @@ const createApp = () => {
       requestBody.phone,
       requestBody.email,
       requestBody.salary,
-      requestBody.start_date
+      requestBody.start_date,
+      requestBody.photo
     );
     return res.json({ success: true });
   });

@@ -21,6 +21,7 @@ export const CreateEmployee = () => {
     email: "",
     start_date: "",
     salary: "",
+    photo: "",
     department_id: parseInt(department_id),
   });
   const [error, setError] = useState("");
@@ -35,6 +36,7 @@ export const CreateEmployee = () => {
 
   const handleChangeEmployeeName = (event) => {
     employee.name = event.target.value;
+    console.log(employee.name);
     setEmployee({ ...employee });
   };
 
@@ -72,6 +74,12 @@ export const CreateEmployee = () => {
     setEmployee({ ...employee });
   };
 
+  const handleChangeEmployeePhoto = (event) => {
+    employee.photo = event.target.value;
+    console.log(employee.photo);
+    setEmployee({ ...employee });
+  };
+
   const handleKeyPress = (event) => {
     if (event.keyCode === 13) {
       submit();
@@ -87,6 +95,7 @@ export const CreateEmployee = () => {
     email: "",
     start_date: "",
     salary: "",
+    photo: "",
     department_id: parseInt(department_id)});
     setError("");
     setDisabled(false);
@@ -95,18 +104,18 @@ export const CreateEmployee = () => {
   const submit = (event) => {
     const request = {};
     Object.entries(employee).forEach(([key, value]) => {
-      if (value !== "") {
-        request[key] = employee.key;
+      console.log(key, value);
+      if (key !== "photo" && value !== "") {
+        request[key] = value;
       }
       else {
-        setError("Fill in all fields");
+        setError("Fill in all required fields");
       }
       }
     )
     createEmployee(department_id, request).then((response) => {
-      console.log(response);
       if (response.success === true) {
-        navigate(`/department/${department_id}/employee`);
+        navigate(`/department/${department_id}`);
       } else {
         setError(response.error);
       }
@@ -179,7 +188,7 @@ export const CreateEmployee = () => {
             </label> <br/>
             <input
               className="input-large-large search-query my-2 mb-3"
-              type="phone"
+              type="tel"
               style={{ width: '75%' }}
               placeholder="Enter phone number"
               onChange={(event) => handleChangeEmployeePhone(event)}
@@ -224,6 +233,21 @@ export const CreateEmployee = () => {
               style={{ width: '75%' }}
               onChange={(event) => handleChangeEmployeeSalary(event)}
               value={employee.salary}
+            ></input>
+        </div>
+
+        <div>
+          <label>
+            Photo (optional)
+            </label> <br/>
+            <input
+              className="input-large-large search-query my-2 mb-3"
+              type="url"
+              placeholder="https://example.com"
+              pattern="https://.*"
+              style={{ width: '75%' }}
+              onChange={(event) => handleChangeEmployeePhoto(event)}
+              value={employee.photo}
             ></input>
         </div>
 
