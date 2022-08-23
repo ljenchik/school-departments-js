@@ -43,9 +43,9 @@ export const GetEmployeeById = () => {
       <Container style={{ "margin-top": "80px" }}>
         <div className="flex-container">
           <div>
-            {employee.photo ? (
+            {employee.photo !== "" ? (
               <div className="flex-left">
-                <img className="photo" src={employee.photo} />
+                <img className="employee-photo" src={employee.photo} />
               </div>
             ) : (
               <div className="flex-left">
@@ -77,7 +77,7 @@ export const GetEmployeeById = () => {
 
             <Row>
               <Col>Department</Col>
-              <Col xs={9}>{employee.department_name}</Col>
+              <Col xs={9}><Link className="link" to={`/department/${employee.department_id}/employee`}>{employee.department_name}</Link></Col>
             </Row>
 
             <Row>
@@ -125,7 +125,7 @@ export const GetEmployeeById = () => {
         <br />
         <div>
           <Link
-            to={`/department/${employee.department_id}/employee`}
+            to="{`/department/{employee.department_id}/employee`}"
             className="link"
           >
             {" "}

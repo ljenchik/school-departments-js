@@ -2,6 +2,7 @@
 import * as ReactBootStrap from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Container from "react-bootstrap/esm/Container";
+import "./css/employeeTable.css";
 
 
 export const EmployeeTable = ({department, employees}) => {
@@ -33,7 +34,7 @@ export const EmployeeTable = ({department, employees}) => {
             {employees.map((employee) => (
               <tr key={employee.id}>
                 <td>
-                  <Link to={`/employee/${employee.id}`} className="employee-link">
+                  <Link to={`/employee/${employee.id}`} className="link">
                     {employee.name}
                   </Link>
                 </td>

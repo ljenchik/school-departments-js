@@ -16,7 +16,7 @@ export const GetAllDepartments = () => {
         <h3 className="title">Departments</h3>
           {departments.map((department) => (
             <div key={department.id}>
-              <Link to={`/department/${department.id}`} style={{ textDecoration: 'none' }}>
+              <Link to={`/department/${department.id}`} className='link'>
         {" "}
         {department.department_name}{" "}
       </Link>

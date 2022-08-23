@@ -12,3 +12,11 @@
    height:auto;
    padding-right: 20px;
  }
+
+ .link {
+   text-decoration: none !important;
+}
+
+.link:hover {
+   color: green !important;
+}

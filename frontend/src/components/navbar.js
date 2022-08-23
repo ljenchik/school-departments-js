@@ -8,6 +8,7 @@ export function Navbar1() {
   return (
     <Navbar bg="light" expand="lg" fixed="top">
       <Container>
+      <Navbar.Brand href="/">Home</Navbar.Brand>
         <Navbar.Brand href="/department">Departments</Navbar.Brand>
         <Navbar.Brand href="/employee">Employees</Navbar.Brand>
         <Nav.Link href="/department/create">Add department</Nav.Link>

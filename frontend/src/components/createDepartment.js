@@ -94,7 +94,7 @@ export const CreateDepartment = () => {
         </fieldset>
         <br />
         <div>
-          <Link to="/department" className="view-all-dep-link">
+          <Link to="/department" className="link">
             {" "}
             View all departments{" "}
           </Link>

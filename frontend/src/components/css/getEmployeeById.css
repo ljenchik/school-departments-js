@@ -26,3 +26,11 @@
 .flex-right {
     width: 65%;
 }
+
+.link {
+    text-decoration: none !important;
+}
+
+.link:hover {
+    color: green !important;
+}

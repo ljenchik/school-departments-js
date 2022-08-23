@@ -1,0 +1,10 @@
+.title {
+    margin-top: 70px;
+    text-align: center;
+}
+
+.home-page-image {
+    justify-content: center;
+    position: absolute;
+    border-radius: 10px;
+}

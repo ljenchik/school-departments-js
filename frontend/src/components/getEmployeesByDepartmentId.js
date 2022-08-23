@@ -44,14 +44,14 @@ export const GetEmployeesByDepartmentId = (id) => {
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>
-            <th>Photo</th>
+            {/* <th>Photo</th> */}
             <th>Role</th>
-            <th>Date of birth</th>
+            {/* <th>Date of birth</th>
             <th>Address</th>
             <th>Phone</th>
             <th>Email</th>
             <th>Salary</th>
-            <th>Start date</th>
+            <th>Start date</th> */}
           </thead>
           <tbody>
             {employees.map((employee) => (
@@ -64,7 +64,7 @@ export const GetEmployeesByDepartmentId = (id) => {
                     {employee.name}
                   </Link>
                   </td>
-                <td> 
+                {/* <td> 
                   
                    <Link
             to={`/employee/${id}`}
@@ -72,14 +72,14 @@ export const GetEmployeesByDepartmentId = (id) => {
             <img className="employee-photo" src={employee.photo} />
           </Link>
          
-                  </td>
+                  </td> */}
                 <td>{employee.role}</td>
-                <td>{employee.dob}</td>
+                {/* <td>{employee.dob}</td>
                 <td>{employee.address}</td>
                 <td>{employee.phone}</td>
                 <td>{employee.email}</td>
                 <td>£{employee.salary}</td>
-                <td>{employee.start_date}</td>
+                <td>{employee.start_date}</td> */}
               </tr>
             ))}
           </tbody>

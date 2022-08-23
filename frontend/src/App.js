@@ -12,12 +12,13 @@ import { GetAllEmployees } from './components/getAllEmployees';
 import { GetEmployeeById } from './components/getEmployeeById';
 import { EditEmployee } from './components/editEmployee';
 import { Navbar1 } from './components/navbar';
+import { HomePage } from './components/home';
 
 const Paths = () => {
   return (
     <Routes>
       <Route exact path="/department/create" element={<CreateDepartment />}></Route>
-      {/* <Route exact path="/department" element={<Home />}></Route> */}
+      <Route exact path="/" element={<HomePage />}></Route>
       <Route exact path="/department" element={<GetAllDepartments />}></Route>
       <Route exact path="/department/:id" element={<DepartmentInfo />}></Route>
       <Route exact path="/department/:id/edit" element={<EditDepartment />}></Route>
