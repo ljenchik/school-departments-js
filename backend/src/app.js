@@ -16,7 +16,7 @@ import {
   updateEmployee,
   deleteEmployeeById,
 } from "./repos/employeeRepo";
-import { datesValidation } from "./datesValidation";
+import { requestValidation } from "./requestValidation";
 
 const createApp = () => {
   const app = express();
@@ -99,18 +99,18 @@ const createApp = () => {
 
   app.get("/employee", async (req, res) => {
     const employees = await getAllEmployees();
-    // for (var i = 0; i < employees.length; i++) {
-    //   employees[i].dob = employees[i].dob
-    //     .toLocaleDateString()
-    //     .split("/")
-    //     .reverse()
-    //     .join("-");
-    //   employees[i].start_date = employees[i].start_date
-    //     .toLocaleDateString()
-    //     .split("/")
-    //     .reverse()
-    //     .join("-");
-    // }
+    for (var i = 0; i < employees.length; i++) {
+      employees[i].dob = employees[i].dob
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
+      employees[i].start_date = employees[i].start_date
+        .toLocaleDateString()
+        .split("/")
+        .reverse()
+        .join("-");
+    }
     return res.json(employees);
   });
 
@@ -151,10 +151,10 @@ const createApp = () => {
   app.post("/department/:id/employee/create", async (req, res) => {
     const requestBody = req.body;
     var department_id = req.params.id;
-    var validDates = datesValidation(requestBody.dob, requestBody.start_date);
-    if (!validDates.success) {
+    var validationResult = requestValidation(requestBody);
+    if (!validationResult.success) {
       res.status(500);
-      return res.json(validDates.error);
+      return res.json(validationResult.error);
     } else {
       try {
         const employeeId = await createEmployee(department_id, requestBody);

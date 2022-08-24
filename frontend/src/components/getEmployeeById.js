@@ -43,7 +43,7 @@ export const GetEmployeeById = () => {
       <Container style={{ "margin-top": "80px" }}>
         <div className="flex-container">
           <div>
-            {employee.photo !== "" ? (
+            {employee.photo ? (
               <div className="flex-left">
                 <img className="employee-photo" src={employee.photo} />
               </div>
@@ -54,7 +54,7 @@ export const GetEmployeeById = () => {
                 >
                   {({ ref, ...triggerHandler }) => (
                     <Link ref={ref}
-                      to={`/department/${employee.department_id}/employee/edit`}
+                      to={`/employee/${employee_id}/edit`}
                       variant="light"
                       {...triggerHandler}
                     >
