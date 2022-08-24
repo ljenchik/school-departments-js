@@ -11,13 +11,6 @@ import "./css/getDepartmentById.css";
 import Container from "react-bootstrap/esm/Container";
 import { EmployeeTable } from "./employeeTable";
 
-const styles = {
-  customButton: {
-    padding: "0px",
-    textDecoration: "none",
-  },
-};
-
 export const DepartmentInfo = () => {
   const params = useParams();
   const department_id = params.id;
@@ -25,7 +18,6 @@ export const DepartmentInfo = () => {
   const [department, setDepartment] = useState({});
   const [employees, setEmployees] = useState([]);
   const [error, setError] = useState("");
-  const [displayTable, setDisplayTable] = useState(false);
   let props = {
     department: department,
     employees: employees,
@@ -59,9 +51,6 @@ export const DepartmentInfo = () => {
     );
   };
 
-  const displayEmployees = () => {
-    setDisplayTable(true);
-  };
 
   if (department.avg === undefined && department.count === undefined) {
     return <div>Loading department ...</div>;
@@ -92,21 +81,8 @@ export const DepartmentInfo = () => {
               </p>
             </div>
           </div>
-          <br />
-
-          
-
-          <div>
-            <Button
-              variant="link"
-              class="btn btn-link"
-              style={styles.customButton}
-              onClick={displayEmployees}
-            >
-              View all employees of {department.department_name}
-            </Button>
-          </div>
-
+          <EmployeeTable {...props} />
+          <br/>
           <Link
             className="link_hover"
             to={`/department/${department_id}/employee/create`}
@@ -114,9 +90,6 @@ export const DepartmentInfo = () => {
           >
             Add employee to {department.department_name}
           </Link>
-
-        <br/>
-          {displayTable ? <EmployeeTable {...props} /> : ""}
         </Container>
       </div>
     );

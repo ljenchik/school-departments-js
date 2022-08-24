@@ -18,7 +18,7 @@ export const EmployeeTable = ({department, employees}) => {
         }
         return (
         <Container style={{"padding": "0px"}}>
-        <h3 className="title">Employees of {department.department_name}</h3>
+        <h5 className="title">Employees of {department.department_name}</h5>
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>
