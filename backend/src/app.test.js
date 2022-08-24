@@ -5,7 +5,7 @@ const request1 = {
   "role" : "Teacher",
   "dob": "1975-10-04",
   "address": "23 Kings Road, London, SW19 3AA",
-  "phone": "0126 612365" ,
+  "phone": "+44 0126 612365",
   "email": "robert@gmail.com",
   "salary": 42594,
   "start_date": "2015-09-01",
@@ -212,5 +212,85 @@ describe("checks if date request is valid", () => {
     const validationResult = requestValidation(request11);
     expect(validationResult.success).toBe(false);
     expect(validationResult.error).toBe("Fill in all required information");
+  });
+});
+
+const request12 = {
+  "name" : "Roberta",
+  "role" : "Teacher",
+  "dob": "1978-12-09",
+  "address": "23 Kings Road, London, SW19 3AA",
+  "phone": "" ,
+  "email": "jnj@gmail.com",
+  "salary": 42594,
+  "start_date": "2022-08-23",
+  "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+}
+
+describe("checks if date request is valid", () => {
+  it("empty phone", async () => {
+    const validationResult = requestValidation(request12);
+    expect(validationResult.success).toBe(false);
+    expect(validationResult.error).toBe("Empty phone number");
+  });
+});
+
+const request13 = {
+  "name" : "Roberta",
+  "role" : "Teacher",
+  "dob": "1978-12-09",
+  "address": "23 Kings Road, London, SW19 3AA",
+  "phone": "+44 asjd 122223" ,
+  "email": "jnj@gmail.com",
+  "salary": 42594,
+  "start_date": "2022-08-23",
+  "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+}
+
+describe("checks if date request is valid", () => {
+  it("not only digits in phone", async () => {
+    const validationResult = requestValidation(request13);
+    expect(validationResult.success).toBe(false);
+    expect(validationResult.error).toBe("Phone number must contain only digits");
+  });
+});
+
+const request14 = {
+  "name" : "Roberta",
+  "role" : "Teacher",
+  "dob": "1978-12-09",
+  "address": "23 Kings Road, London, SW19 3AA",
+  "phone": "+44122223" ,
+  "email": "jnj@gmail.com",
+  "salary": 42594,
+  "start_date": "2022-08-23",
+  "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+}
+
+describe("checks if date request is valid", () => {
+  it("wrong length of phine number", async () => {
+    const validationResult = requestValidation(request14);
+    expect(validationResult.success).toBe(false);
+    expect(validationResult.error).toBe("Enter phone number in format +44 xxxx xxxxxx");
+  });
+});
+
+const request15 = {
+  "name" : "Roberta",
+  "role" : "Teacher",
+  "dob": "1978-12-09",
+  "address": "23 Kings Road, London, SW19 3AA",
+  "phone": "-44 1222 236767" ,
+  "email": "jnj@gmail.com",
+  "salary": 42594,
+  "start_date": "2022-08-23",
+  "photo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cHJvZmVzc2lvbmFsfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60"
+}
+
+describe("checks if date request is valid", () => {
+  it("wrong length of phine number", async () => {
+    const validationResult = requestValidation(request15);
+    expect(validationResult.success).toBe(false);
+    expect(validationResult.error).toBe("Enter phone number in format +44 xxxx xxxxxx");
   });
 });

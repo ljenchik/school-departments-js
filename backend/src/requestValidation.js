@@ -7,7 +7,8 @@ export function requestValidation(request) {
   const emailFormat = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 
   if (!request.name && !request.role && !request.dob && 
-    !request.address && !request.phone && !request.email && !request.start_date && !request.salary) {
+    !request.address && !request.phone && !request.email && 
+    !request.start_date && !request.salary && !request.photo) {
     return { success: false, error: "Fill in all required information" };
   }
 
@@ -39,6 +40,20 @@ export function requestValidation(request) {
 
   if (!emailFormat.test(request.email)) {
     return { success: false, error: "Invalid email address" };
+  }
+
+  if (!request.phone) {
+    return { success: false, error: "Empty phone number" };
+  }
+
+  const phone = request.phone.replace(/\s/g, '');
+  if (phone.length !== 13 || phone.slice(0, 3) !== "+44") {
+    return { success: false, error: "Enter phone number in format +44 xxxx xxxxxx" };
+  }
+
+  const pattern = /^\d+$/;
+  if (!pattern.test(phone.slice(1))) {
+    return { success: false, error: "Phone number must contain only digits" };
   }
 
   return { success: true, error: "" };

@@ -157,6 +157,7 @@ const createApp = () => {
       return res.json(validationResult.error);
     } else {
       try {
+        requestBody.phone = requestBody.phone.slice(0, 3) + " " + requestBody.phone.slice(3, 7) + " " + requestBody.phone.slice(7, 13);
         const employeeId = await createEmployee(department_id, requestBody);
         return res.json({
           success: true,

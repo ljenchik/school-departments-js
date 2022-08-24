@@ -183,7 +183,7 @@ export const CreateEmployee = () => {
               className="input-large-large search-query my-2 mb-3"
               type="tel"
               style={{ width: '75%' }}
-              placeholder="Enter phone number"
+              placeholder="+44 xxxx xxxxxx"
               onChange={(event) => handleChangeEmployeePhone(event)}
               value={employee.phone}
             ></input>
