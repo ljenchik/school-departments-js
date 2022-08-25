@@ -157,7 +157,8 @@ const createApp = () => {
       return res.json(validationResult.error);
     } else {
       try {
-        requestBody.phone = requestBody.phone.slice(0, 3) + " " + requestBody.phone.slice(3, 7) + " " + requestBody.phone.slice(7, 13);
+        const phone = requestBody.phone.replace(/\s/g, '');
+        requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
         const employeeId = await createEmployee(department_id, requestBody);
         return res.json({
           success: true,
@@ -174,20 +175,36 @@ const createApp = () => {
   app.put("/employee/:id(\\d+)/edit", async (req, res) => {
     var id = req.params.id;
     const requestBody = req.body;
-    await updateEmployee(
-      id,
-      requestBody.name,
-      requestBody.role,
-      requestBody.dob,
-      requestBody.address,
-      requestBody.phone,
-      requestBody.email,
-      requestBody.salary,
-      requestBody.start_date,
-      requestBody.photo
-    );
-    return res.json({ success: true });
+    var validationResult = requestValidation(requestBody);
+    if (!validationResult.success) {
+      res.status(500);
+      return res.json(validationResult.error);
+    } else {
+      try {
+        const phone = requestBody.phone.replace(/\s/g, '');
+        requestBody.phone = phone.slice(0, 3) + " " + phone.slice(3, 7) + " " + phone.slice(7, 13);
+        await updateEmployee(
+          id,
+          requestBody.name,
+          requestBody.role,
+          requestBody.dob,
+          requestBody.address,
+          requestBody.phone,
+          requestBody.email,
+          requestBody.salary,
+          requestBody.start_date,
+          requestBody.photo
+        );
+        return res.json({
+          success: true,
+        });
+      } catch (e) {
+        res.status(500);
+        return res.send(e.toString());
+      }
+    }
   });
+
 
   app.delete("/employee/:id(\\d+)/delete", async (req, res) => {
     var id = req.params.id;

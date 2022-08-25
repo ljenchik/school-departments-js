@@ -12,6 +12,14 @@ export function requestValidation(request) {
     return { success: false, error: "Fill in all required information" };
   }
 
+  if (!request.name) {
+    return { success: false, error: "Enter employee name" };
+  }
+
+  if (!request.role) {
+    return { success: false, error: "Enter employee role" };
+  }
+
   if (!date1.isValid() && !date2.isValid()) {
     return { success: false, error: "Invalid dates" };
   }
@@ -34,26 +42,33 @@ export function requestValidation(request) {
     };
   }
 
-  if (!request.email) {
-    return { success: false, error: "Empty email address" };
-  }
-
-  if (!emailFormat.test(request.email)) {
-    return { success: false, error: "Invalid email address" };
+  if (!request.address) {
+    return { success: false, error: "Empty address" };
   }
 
   if (!request.phone) {
     return { success: false, error: "Empty phone number" };
   }
 
+
   const phone = request.phone.replace(/\s/g, '');
+  const pattern = /^\d+$/;
+
+
+  if (!pattern.test(phone.slice(1))) {
+    return { success: false, error: "Phone number must contain only digits" };
+  }
+
   if (phone.length !== 13 || phone.slice(0, 3) !== "+44") {
     return { success: false, error: "Enter phone number in format +44 xxxx xxxxxx" };
   }
+  
+  if (!request.email) {
+    return { success: false, error: "Empty email address" };
+  }
 
-  const pattern = /^\d+$/;
-  if (!pattern.test(phone.slice(1))) {
-    return { success: false, error: "Phone number must contain only digits" };
+  if (!emailFormat.test(request.email)) {
+    return { success: false, error: "Invalid email address" };
   }
 
   return { success: true, error: "" };

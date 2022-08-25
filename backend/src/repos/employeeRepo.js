@@ -3,7 +3,7 @@ import { knex } from "./database";
 export async function getAllEmployees() {
   return (await knex
     .raw('select e.*, d.department_name from employee e\
-    join department d on e.department_id=d.id')
+    join department d on e.department_id=d.id order By e.name' )
   ).rows
   }
 
@@ -11,7 +11,7 @@ export async function getEmployeesByDepartmentId(id) {
   return (await knex
     .raw('select e.*, d.department_name from employee e\
     join department d on d.id=e.department_id\
-    where e.department_id= ' + id)
+    where e.department_id= ' + id + 'order By e.name')
   ).rows
   }
 
@@ -38,6 +38,7 @@ export async function createEmployee(department_id, employee) {
         department_id: department_id
       })
       .returning("id");
+
     return id[0].id;
   }
 

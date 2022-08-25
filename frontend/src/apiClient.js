@@ -133,18 +133,33 @@ export async function createEmployee(department_id, employee) {
 }
 
 export async function editEmployee(id, updatedEmployee) {
-  const response = await fetch(`${baseurl}/employee/${id}/edit`, {
-    method: "PUT",
-    body: JSON.stringify(updatedEmployee),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  const data = await response.json();
-  if (!data.success) {
-    return { error: data.message, success: false };
-  } else {
-    return { error: "", success: true };
+  try {
+    const response = await fetch(`${baseurl}/employee/${id}/edit`, {
+      method: "PUT",
+      body: JSON.stringify(updatedEmployee),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (!data.success) {
+        return {
+          success: false,
+          error: data.error,
+        };
+      } else {
+        return {
+          success: true,
+          error: "",
+        };
+      }
+    } else {
+      const error = await response.text();
+      return { success: false, id: "", error: error };
+    }
+  } catch (e) {
+    return { success: false, id: "", error: e };
   }
 }
 

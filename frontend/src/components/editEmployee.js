@@ -110,12 +110,11 @@ export const EditEmployee = () => {
       request.photo = employee.photo;
     }
     editEmployee(employee_id, request).then((response) => {
-      if (response.success === true) {
-        navigate(`/employee/${employee_id}`);
+      if (!response.success) { 
+        setError(response.error.slice(1, -1));
       } else {
-        setError(response.error);
+        navigate(`/employee/${employee_id}`);
       }
-      setDisabled(true);
     });
   };
 
@@ -168,7 +167,7 @@ export const EditEmployee = () => {
         </div>
 
         <div>
-          <label>Phone</label> <br />
+          <label>Phone (+44 xxxx xxxxxx)</label> <br />
           <input
             className="input-large-large search-query my-2"
             type="phone"
@@ -230,6 +229,9 @@ export const EditEmployee = () => {
         >
           Save
         </Button>
+        <p className="error">
+                {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
+              </p>
       </fieldset>
 
       <div>
