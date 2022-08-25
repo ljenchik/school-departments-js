@@ -71,6 +71,11 @@ export function requestValidation(request) {
     return { success: false, error: "Invalid email address" };
   }
 
+  if (!request.salary) {
+    return { success: false, error: "Empty salary" };
+  }
+  
+
   return { success: true, error: "" };
 }
  

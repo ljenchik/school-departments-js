@@ -221,9 +221,9 @@ export const EditEmployee = () => {
             value={employee.photo}
           ></input>
         </div>
-
+      <div className="d-flex flex-row">
         <Button
-          className="my-3"
+          className="my-4"
           disabled={isDisabled}
           onClick={saveUpdatedEmployee}
         >
@@ -232,6 +232,7 @@ export const EditEmployee = () => {
         <p className="error">
                 {error !== "" ? <p style={{ color: "red" }}>{error}</p> : ""}
               </p>
+              </div>
       </fieldset>
 
       <div>

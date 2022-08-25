@@ -32,7 +32,7 @@ export const CreateDepartment = () => {
           else {setError(response.error);}
         } else {
           setMessage(`You succesfully added ${department.department_name}`);
-          //navigate(`/department`);
+          navigate(`/department`);
         }
         setDisabled(true);
       });
