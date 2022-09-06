@@ -12,6 +12,7 @@ import {
   getAllEmployees,
   getEmployeeById,
   getEmployeesByDepartmentId,
+  getAllEmployeesByDob,
   createEmployee,
   updateEmployee,
   deleteEmployeeById,
@@ -146,6 +147,23 @@ const createApp = () => {
       .reverse()
       .join("-");
     return res.json(employee);
+  });
+
+
+  app.get("/employee/dates", async (req, res) => {
+    const { from, to } = req.query;
+  
+    var employees = await getAllEmployeesByDob(from, to);
+    if (employees) {
+      for (var i = 0; i < employees.length; i++) {
+        employees[i].dob = employees[i].dob.toISOString().split("T")[0];
+        employees[i].start_date = employees[i].start_date.toISOString().split("T")[0];
+      }
+      return res.json(employees);
+    }
+    else {
+      console.log("No employees");
+    }
   });
 
   app.post("/department/:id/employee/create", async (req, res) => {

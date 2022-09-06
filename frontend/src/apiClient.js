@@ -89,6 +89,16 @@ export async function getEmployeeById(id) {
   return await response.json();
 }
 
+
+
+export async function getAllEmployeesByDob(dob) {
+  const date = new Date(dob);
+  console.log(dob);
+  const response = await fetch(`${baseurl}/employee?date=${date.toISOString()}`);
+  return await response.json();
+}
+
+
 export async function getEmployeesByDepartmentId(id) {
   const response = await fetch(`${baseurl}/department/${id}/employee`);
   return await response.json();

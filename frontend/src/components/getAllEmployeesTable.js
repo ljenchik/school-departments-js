@@ -17,7 +17,6 @@ export const GetAllEmployeesTable = ({employees}) => {
         }
         return (
         <Container>
-          <h3>Employees</h3>
         <ReactBootStrap.Table striped bordered hover>
           <thead>
             <th>Name</th>

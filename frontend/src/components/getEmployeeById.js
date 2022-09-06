@@ -85,6 +85,12 @@ export const GetEmployeeById = () => {
               <Col xs={9}>{employee.role}</Col>
             </Row>
 
+
+            <Row>
+              <Col>Date of birth</Col>
+              <Col xs={9}>{employee.dob}</Col>
+            </Row>
+
             <Row>
               <Col>Address</Col>
               <Col xs={9}>{employee.address}</Col>
@@ -125,7 +131,7 @@ export const GetEmployeeById = () => {
         <br />
         <div>
           <Link
-            to="{`/department/{employee.department_id}/employee`}"
+            to={`/department/${employee.department_id}`}
             className="link"
           >
             {" "}

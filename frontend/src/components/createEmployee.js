@@ -47,6 +47,7 @@ export const CreateEmployee = () => {
   const handleChangeEmployeeDob = (event) => {
     employee.dob = event.target.value;
     setEmployee({ ...employee });
+    console.log(employee.dob);
   };
 
   const handleChangeEmployeeAddress = (event) => {
@@ -263,7 +264,7 @@ export const CreateEmployee = () => {
       </fieldset>
 
       <div>
-        <Link to={`/department/${department_id}/employee`} className="link">
+        <Link to={`/department/${department_id}`} className="link">
           {" "}
           View all employees of {departmentName}
         </Link>
