@@ -12,6 +12,8 @@ export const GetAllEmployees = () => {
   const [departments, setDepartments] = useState([]);
   const [department, setDepartment] = useState();
   const [searchTableDisplay, setSearchTableDisplay] = useState(false);
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [dob, setDob] = useState();
   const [employeesByDob, setEmployeesByDob] = useState([]);
   const navigate = useNavigate();
@@ -19,10 +21,9 @@ export const GetAllEmployees = () => {
   useEffect(() => {
     getAllEmployees().then((response) => setEmployees(response));
     getAllDepartments().then((response) => setDepartments(response));
-    getAllEmployeesByDob().then((response) => setEmployeesByDob(response));
   }, []);
 
-  const handleChange = (event) => {
+  const handleChangeDepartment = (event) => {
     setDepartment(event.target.value);
   };
 
@@ -37,12 +38,34 @@ export const GetAllEmployees = () => {
     }
   };
 
-  const handleChangeDate = (event) => {
-    setDob(event.target.value);
+  const handleChangeStartDate = (event) => {
+    const start = new Date(event.target.value).toISOString().slice(0, 10);
+    setStartDate(start);
+    console.log("Start", startDate);
+  };
+
+  const handleChangeEndDate = (event) => {
+    const end = new Date(event.target.value).toISOString().slice(0, 10);
+    setEndDate(end);
+    console.log("End", endDate);
   };
 
   const search = (event) => {
-    setSearchTableDisplay(true);
+    getAllEmployeesByDob(startDate, endDate).then((response) => {
+      setEmployeesByDob(response);
+      setSearchTableDisplay(true);
+    });
+  };
+
+  const reset = (event) => {
+    getAllEmployees().then((response) => {
+      setEmployees(response);
+      setSearchTableDisplay(false);
+      setStartDate('dd/mm/yyyy');
+      setEndDate('dd/mm/yyyy');
+      console.log("Start", startDate);
+      console.log("End", endDate);
+    });
   };
 
   const handleKeyPress = (event) => {
@@ -52,44 +75,53 @@ export const GetAllEmployees = () => {
   };
 
   return (
-    <Container>
-      <div className="container">
-        <h3 className="title">Employees</h3>
+      <Container>
+        <div className="container">
+          <h3 className="title">Employees</h3>
+          <label className="add-dep-label">
+            Filter employees by date of birth from
+          </label>
+        <input type="date" onChange={handleChangeStartDate} value={startDate}/>
+          <label className="add-dep-label">to</label>
+          <input type="date" onChange={handleChangeEndDate} value={endDate}/>
+          <Button
+            className="btn btn-success my-3 mx-2"
+            onClick={search}
+          >
+            Search
+          </Button>
 
-        <label className="add-dep-label">
-          Search employee by date of birth from
-        </label>
-        <input type="date" onChange={handleChangeDate} />
-        <label className="add-dep-label">to</label>
-        <input type="date" onChange={handleChangeDate} />
-        <Button className="btn btn-success my-3 mx-2" onClick={search}>
-          Search
-        </Button>
-        <br />
+          <Button
+            className="btn btn-success my-3 mx-2"
+            onClick={reset}
+          >
+            Clear dates
+          </Button>
+          <br />
 
-        <GetAllEmployeesTable employees={employees} />
-        <br />
-        <label className="add-dep-label">Add employee to department</label>
-        <select
-          className="select-department"
-          value={department}
-          onChange={handleChange}
-        >
-          <option>Choose department</option>
-          {departments.map((department) => (
-            <option>{department.department_name}</option>
-          ))}
-          <option>Add department</option>
-        </select>
+         {searchTableDisplay ? <GetAllEmployeesTable employees={employeesByDob} /> : <GetAllEmployeesTable employees={employees} />} 
 
-        <Button
-          className="btn btn-success my-3 mx-2"
-          onKeyDown={handleKeyPress}
-          onClick={submit}
-        >
-          Submit
-        </Button>
-      </div>
-    </Container>
-  );
+          <label className="add-dep-label">Add employee to department</label>
+          <select
+            className="select-department"
+            value={department}
+            onChange={handleChangeDepartment}
+          >
+            <option>Choose department</option>
+            {departments.map((department) => (
+              <option>{department.department_name}</option>
+            ))}
+            <option>Add department</option>
+          </select>
+
+          <Button
+            className="btn btn-success my-3 mx-2"
+            onKeyDown={handleKeyPress}
+            onClick={submit}
+          >
+            Submit
+          </Button>
+        </div>
+      </Container>
+    );
 };

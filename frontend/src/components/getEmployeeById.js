@@ -49,11 +49,10 @@ export const GetEmployeeById = () => {
               </div>
             ) : (
               <div className="flex-left">
-                <OverlayTrigger
-                  overlay={<Tooltip>Add employee photo</Tooltip>}
-                >
+                <OverlayTrigger overlay={<Tooltip>Add employee photo</Tooltip>}>
                   {({ ref, ...triggerHandler }) => (
-                    <Link ref={ref}
+                    <Link
+                      ref={ref}
                       to={`/employee/${employee_id}/edit`}
                       variant="light"
                       {...triggerHandler}
@@ -77,14 +76,20 @@ export const GetEmployeeById = () => {
 
             <Row>
               <Col>Department</Col>
-              <Col xs={9}><Link className="link" to={`/department/${employee.department_id}/employee`}>{employee.department_name}</Link></Col>
+              <Col xs={9}>
+                <Link
+                  className="link"
+                  to={`/department/${employee.department_id}/employee`}
+                >
+                  {employee.department_name}
+                </Link>
+              </Col>
             </Row>
 
             <Row>
               <Col>Role</Col>
               <Col xs={9}>{employee.role}</Col>
             </Row>
-
 
             <Row>
               <Col>Date of birth</Col>
@@ -130,10 +135,7 @@ export const GetEmployeeById = () => {
         </div>
         <br />
         <div>
-          <Link
-            to={`/department/${employee.department_id}`}
-            className="link"
-          >
+          <Link to={`/department/${employee.department_id}`} className="link">
             {" "}
             View all employees of {employee.department_name}
           </Link>

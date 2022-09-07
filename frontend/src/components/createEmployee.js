@@ -47,7 +47,6 @@ export const CreateEmployee = () => {
   const handleChangeEmployeeDob = (event) => {
     employee.dob = event.target.value;
     setEmployee({ ...employee });
-    console.log(employee.dob);
   };
 
   const handleChangeEmployeeAddress = (event) => {

@@ -150,9 +150,8 @@ const createApp = () => {
   });
 
 
-  app.get("/employee/dates", async (req, res) => {
+  app.get("/employee/search", async (req, res) => {
     const { from, to } = req.query;
-  
     var employees = await getAllEmployeesByDob(from, to);
     if (employees) {
       for (var i = 0; i < employees.length; i++) {
