@@ -14,7 +14,7 @@ export const GetAllEmployees = () => {
   const [searchTableDisplay, setSearchTableDisplay] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [dob, setDob] = useState();
+  const [isDisabled, setDisabled] = useState(true);
   const [employeesByDob, setEmployeesByDob] = useState([]);
   const navigate = useNavigate();
 
@@ -41,20 +41,42 @@ export const GetAllEmployees = () => {
   const handleChangeStartDate = (event) => {
     const start = new Date(event.target.value).toISOString().slice(0, 10);
     setStartDate(start);
-    console.log("Start", startDate);
+    if (startDate !== 'dd/mm/yyyy') {
+      setDisabled(false);
+    }
   };
 
   const handleChangeEndDate = (event) => {
     const end = new Date(event.target.value).toISOString().slice(0, 10);
     setEndDate(end);
-    console.log("End", endDate);
+    if (endDate !== 'dd/mm/yyyy') {
+      setDisabled(false);
+    }
   };
 
   const search = (event) => {
-    getAllEmployeesByDob(startDate, endDate).then((response) => {
-      setEmployeesByDob(response);
-      setSearchTableDisplay(true);
-    });
+    if (startDate === 'dd/mm/yyyy' && endDate === 'dd/mm/yyyy') {
+      setDisabled(true);
+    }
+    else if (startDate !== 'dd/mm/yyyy' && endDate === 'dd/mm/yyyy'){
+      getAllEmployeesByDob(startDate, new Date().toJSON().slice(0,10)).then((response) => {
+        setEmployeesByDob(response);
+        setSearchTableDisplay(true);
+      });
+    }
+    else if (startDate === 'dd/mm/yyyy' && endDate !== 'dd/mm/yyyy'){
+      getAllEmployeesByDob('1900-01-01', endDate).then((response) => {
+        setEmployeesByDob(response);
+        setSearchTableDisplay(true);
+      });
+    }
+    else {
+      getAllEmployeesByDob(startDate, endDate).then((response) => {
+        setEmployeesByDob(response);
+        setSearchTableDisplay(true);
+      });
+    }
+    
   };
 
   const reset = (event) => {
@@ -63,8 +85,7 @@ export const GetAllEmployees = () => {
       setSearchTableDisplay(false);
       setStartDate('dd/mm/yyyy');
       setEndDate('dd/mm/yyyy');
-      console.log("Start", startDate);
-      console.log("End", endDate);
+      setDisabled(true);
     });
   };
 
@@ -87,6 +108,7 @@ export const GetAllEmployees = () => {
           <Button
             className="btn btn-success my-3 mx-2"
             onClick={search}
+            disabled={isDisabled}
           >
             Search
           </Button>
